@@ -23,6 +23,7 @@ jobs:
         env:
           POSTGRES_DATABASE: lian_stock
           POSTGRES_USER: lian_admin
+          POSTGRES_PASSWORD: testpass
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -47,7 +48,7 @@ jobs:
         env:
           DB_URL: 'jdbc:postgresql://localhost:5432/lian_stock'
           DB_USER: lian_admin
-          DB_PASSWORD: ''
+          DB_PASSWORD: testpass
 
       - name: Generate JaCoCo Badge
         uses: cicirello/jacoco-badge-generator@v2
