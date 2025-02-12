@@ -20,15 +20,14 @@ jobs:
         image: postgres:latest
         ports:
           - 5432:5432
+        env:
+          POSTGRES_DATABASE: lian_stock
+          POSTGRES_USER: lian_admin
         options: >-
-          --health-cmd "pg_isready -U lian_admin -d lian_stock"
+          --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-        env:
-          DB_URL: lian_stock
-          DB_USER: lian_admin
-          DB_PASSWORD: ''
 
     steps:
       - name: Checkout
@@ -43,14 +42,12 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Set up environment variables to PostgreSQL
-        run: |
-          echo "DB_URL=jdbc://postgresql://localhost:5432/lian_stock" >> $GITHUB_ENV
-          echo "DB_USER=lian_admin" >> $GITHUB_ENV
-          echo "DB_PASSWORD=" >> $GITHUB_ENV
-
       - name: Run test
         run: ./gradlew test
+        env:
+          DB_URL: 'jdbc:postgresql://localhost:5432/lian_stock'
+          DB_USER: 'lian_admin'
+          DB_PASSWORD: ''
 
       - name: Generate JaCoCo Badge
         uses: cicirello/jacoco-badge-generator@v2
