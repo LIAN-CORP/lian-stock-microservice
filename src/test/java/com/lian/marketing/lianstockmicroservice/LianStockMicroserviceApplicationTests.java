@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
+@Disabled("No run contextLoads test")
 class LianStockMicroserviceApplicationTests {
 
-    @Disabled("No run contextLoads test")
     @Test
     void contextLoads() {
     }
