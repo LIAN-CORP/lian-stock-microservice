@@ -28,7 +28,7 @@ jobs:
         env:
           DB_URL: lian_stock
           DB_USER: lian_admin
-          DB_PASSWORD: adminpassword
+          DB_PASSWORD: ''
 
     steps:
       - name: Checkout
@@ -45,9 +45,9 @@ jobs:
 
       - name: Set up environment variables to PostgreSQL
         run: |
-          echo "DB_URL=jdbc://postgresql://localhost:5432/testdb" >> $GITHUB_ENV
-          echo "DB_USER=testuser" >> $GITHUB_ENV
-          echo "DB_PASSWORD=testpass" >> $GITHUB_ENV
+          echo "DB_URL=jdbc://postgresql://localhost:5432/lian_stock" >> $GITHUB_ENV
+          echo "DB_USER=lian_admin" >> $GITHUB_ENV
+          echo "DB_PASSWORD=" >> $GITHUB_ENV
 
       - name: Run test
         run: ./gradlew test
