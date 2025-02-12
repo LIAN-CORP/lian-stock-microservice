@@ -15,6 +15,21 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      database:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U lian_admin -d lian_stock"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          DB_URL: testdb
+          DB_USERNAME: testuser
+          DB_PASSWORD: testpass
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -27,6 +42,12 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+
+      - name: Set up environment variables to PostgreSQL
+        run: |
+          echo "DB_URL=jdbc://postgresql://localhost:5432/testdb" >> $GITHUB_ENV
+          echo "DB_USER=testuser" >> $GITHUB_ENV
+          echo "DB_PASSWORD=testpass" >> $GITHUB_ENV
 
       - name: Run test
         run: ./gradlew test
