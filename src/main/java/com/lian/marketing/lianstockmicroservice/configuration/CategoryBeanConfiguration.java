@@ -8,20 +8,22 @@ import com.lian.marketing.lianstockmicroservice.infrastructure.driven.jpa.postgr
 import com.lian.marketing.lianstockmicroservice.infrastructure.driven.jpa.postgresql.repository.ICategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @RequiredArgsConstructor
+@Configuration
 public class CategoryBeanConfiguration {
 
     private final ICategoryEntityMapper categoryEntityMapper;
     private final ICategoryRepository categoryRepository;
 
     @Bean
-    private ICategoryPersistencePort categoryPersistencePort() {
+    public ICategoryPersistencePort categoryPersistencePort() {
         return new CategoryAdapter(categoryEntityMapper, categoryRepository);
     }
 
     @Bean
-    private ICategoryServicePort categoryServicePort() {
+    public ICategoryServicePort categoryServicePort() {
         return new CategoryUseCase(categoryPersistencePort());
     }
 
