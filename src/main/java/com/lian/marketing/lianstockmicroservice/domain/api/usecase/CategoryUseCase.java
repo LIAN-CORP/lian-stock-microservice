@@ -1,0 +1,25 @@
+package com.lian.marketing.lianstockmicroservice.domain.api.usecase;
+
+import com.lian.marketing.lianstockmicroservice.domain.api.ICategoryServicePort;
+import com.lian.marketing.lianstockmicroservice.domain.constants.ExceptionConstants;
+import com.lian.marketing.lianstockmicroservice.domain.exception.CategoryAlreadyExistsException;
+import com.lian.marketing.lianstockmicroservice.domain.model.Category;
+import com.lian.marketing.lianstockmicroservice.domain.spi.ICategoryPersistencePort;
+
+public class CategoryUseCase implements ICategoryServicePort {
+
+    private final ICategoryPersistencePort categoryPersistencePort;
+
+    public CategoryUseCase(ICategoryPersistencePort categoryPersistencePort) {
+        this.categoryPersistencePort = categoryPersistencePort;
+    }
+
+    @Override
+    public void createCategory(Category category) {
+        if(categoryPersistencePort.isCategoryExistsByName(category.getName())) {
+            throw new CategoryAlreadyExistsException(
+                    String.format(ExceptionConstants.CATEGORY_ALREADY_EXISTS_WITH_NAME, category.getName()));
+        }
+        categoryPersistencePort.saveCategory(category);
+    }
+}
