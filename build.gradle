@@ -60,7 +60,10 @@ jacocoTestReport {
                 files(classDirectories.files.collect{
                     fileTree(dir: it, excludes: [
                             "**/mapper/**",
-                            "**/dto/**"
+                            "**/dto/**",
+                            "**/infrastructure/**",
+                            "**/handler/**",
+                            "**/configuration/**"
                     ])
                 })
         )
