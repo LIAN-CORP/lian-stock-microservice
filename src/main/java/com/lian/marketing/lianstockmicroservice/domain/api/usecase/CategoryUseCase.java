@@ -4,6 +4,7 @@ import com.lian.marketing.lianstockmicroservice.domain.api.ICategoryServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.constants.ExceptionConstants;
 import com.lian.marketing.lianstockmicroservice.domain.exception.CategoryAlreadyExistsException;
 import com.lian.marketing.lianstockmicroservice.domain.model.Category;
+import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
 import com.lian.marketing.lianstockmicroservice.domain.spi.ICategoryPersistencePort;
 
 public class CategoryUseCase implements ICategoryServicePort {
@@ -22,4 +23,10 @@ public class CategoryUseCase implements ICategoryServicePort {
         }
         categoryPersistencePort.saveCategory(category);
     }
+
+    @Override
+    public ContentPage<Category> findAllCategories(int page, int size, boolean isAsc) {
+        return categoryPersistencePort.findAllCategories(page, size, isAsc);
+    }
+
 }
