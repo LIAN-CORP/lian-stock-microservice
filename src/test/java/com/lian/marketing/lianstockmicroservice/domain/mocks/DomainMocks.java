@@ -3,6 +3,7 @@ package com.lian.marketing.lianstockmicroservice.domain.mocks;
 import com.lian.marketing.lianstockmicroservice.domain.model.Category;
 import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,6 +32,22 @@ public class DomainMocks {
                 true,
                 true,
                 mockCategoriesList()
+        );
+    }
+
+    public static List<Category> mockEmptyCategoriesList() {
+        return Collections.emptyList();
+    }
+
+    public static ContentPage<Category> mockCategoryPageWithEmptyContent() {
+        return new ContentPage<>(
+                1,
+                0,
+                0,
+                0,
+                true,
+                true,
+                mockEmptyCategoriesList()
         );
     }
 
