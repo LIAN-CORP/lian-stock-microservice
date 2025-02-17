@@ -47,7 +47,7 @@ public class CategoryController {
             content = {
                     @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = ContentPage.class))
             }),
-            @ApiResponse(responseCode = OpenApiConstants.BAD_REQUEST_STATUS_CODE, description = OpenApiConstants.CATEGORIES_GET_ALL_DESCRIPTION_400,
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.CATEGORY_DESCRIPTION_404,
             content = {
                     @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = ExceptionResponse.class))
             })
