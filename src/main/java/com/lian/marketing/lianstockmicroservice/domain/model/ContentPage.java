@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 public class ContentPage<T> {
     private int totalPage;
-    private int totalElements;
+    private long totalElements;
     private int pageNumber;
     private int pageSize;
     private boolean isFirst;
