@@ -12,4 +12,9 @@ public class OpenApiConstants {
     public static final String CATEGORY_POST_SUMMARY = "Save new category";
     public static final String CATEGORY_DESCRIPTION_200 = "Category saved";
     public static final String CATEGORY_DESCRIPTION_400 = "Invalid category";
+
+    //Paged
+    public static final String CATEGORIES_DEFAULT_PAGE = "0";
+    public static final String CATEGORIES_DEFAULT_SIZE = "10";
+    public static final String CATEGORIES_DEFAULT_IS_ASC = "true";
 }
