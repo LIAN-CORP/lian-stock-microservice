@@ -2,6 +2,7 @@ package com.lian.marketing.lianstockmicroservice.domain;
 
 import com.lian.marketing.lianstockmicroservice.domain.api.ICategoryServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.api.usecase.CategoryUseCase;
+import com.lian.marketing.lianstockmicroservice.domain.exception.CategoriesNotFoundException;
 import com.lian.marketing.lianstockmicroservice.domain.exception.CategoryAlreadyExistsException;
 import com.lian.marketing.lianstockmicroservice.domain.mocks.DomainMocks;
 import com.lian.marketing.lianstockmicroservice.domain.model.Category;
@@ -70,6 +71,21 @@ class CategoryUseCaseTest {
 
         //Assert
         assertEquals(categoryPage, result);
+        verify(categoryPersistencePort, times(1)).findAllCategories(page, size, isAsc);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCategoryNotFound() {
+        //Arrange
+        int page = 1, size = 1;
+        boolean isAsc = true;
+        when(categoryPersistencePort.findAllCategories(page, size, isAsc)).thenReturn(DomainMocks.mockCategoryPageWithEmptyContent());
+
+        //Act
+        categoryServicePort.findAllCategories(page, size, isAsc);
+
+        //Assert
+        assertThrows(CategoriesNotFoundException.class, () -> categoryUseCase.findAllCategories(page, size, isAsc));
         verify(categoryPersistencePort, times(1)).findAllCategories(page, size, isAsc);
     }
 }
