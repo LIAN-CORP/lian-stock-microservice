@@ -5,6 +5,7 @@ import com.lian.marketing.lianstockmicroservice.domain.api.usecase.CategoryUseCa
 import com.lian.marketing.lianstockmicroservice.domain.exception.CategoryAlreadyExistsException;
 import com.lian.marketing.lianstockmicroservice.domain.mocks.DomainMocks;
 import com.lian.marketing.lianstockmicroservice.domain.model.Category;
+import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
 import com.lian.marketing.lianstockmicroservice.domain.spi.ICategoryPersistencePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,5 +55,21 @@ class CategoryUseCaseTest {
         //Assert
         assertThrows(CategoryAlreadyExistsException.class, () -> categoryUseCase.createCategory(category));
         verify(categoryPersistencePort, times(0)).saveCategory(category);
+    }
+
+    @Test
+    void shouldReturnCategoriesRecordsSuccessfully() {
+        //Arrange
+        ContentPage<Category> categoryPage = DomainMocks.mockCategoryPage();
+        int page = 1, size = 1;
+        boolean isAsc = true;
+        when(categoryPersistencePort.findAllCategories(page, size, isAsc)).thenReturn(categoryPage);
+
+        //Act
+        ContentPage<Category> result = categoryUseCase.findAllCategories(page, size, isAsc);
+
+        //Assert
+        assertEquals(categoryPage, result);
+        verify(categoryPersistencePort, times(1)).findAllCategories(page, size, isAsc);
     }
 }
