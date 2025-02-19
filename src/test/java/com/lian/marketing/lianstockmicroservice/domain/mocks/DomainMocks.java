@@ -2,6 +2,7 @@ package com.lian.marketing.lianstockmicroservice.domain.mocks;
 
 import com.lian.marketing.lianstockmicroservice.domain.model.Category;
 import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
+import com.lian.marketing.lianstockmicroservice.domain.model.Subcategory;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,6 +49,15 @@ public class DomainMocks {
                 true,
                 true,
                 mockEmptyCategoriesList()
+        );
+    }
+
+    public static Subcategory mockSubcategory() {
+        return new Subcategory(
+                UUID.randomUUID(),
+                "Subcategory name",
+                "Description",
+                UUID.randomUUID()
         );
     }
 
