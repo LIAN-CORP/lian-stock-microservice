@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Check;
 
 import java.util.UUID;
 
@@ -15,7 +14,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-@Check(constraints = "stock >= 0 AND price_sell > 0 AND price_buy > 0")
 public class ProductEntity {
 
     @Id
@@ -29,13 +27,13 @@ public class ProductEntity {
     private String description;
 
     @Column(nullable = false)
-    private int stock;
+    private Integer stock;
 
-    @Column(columnDefinition = "numeric(10,2)", nullable = false)
-    private double price_sell;
+    @Column(name = "price_sell", columnDefinition = "numeric(10,2)", nullable = false)
+    private double priceSell;
 
-    @Column(columnDefinition = "numeric(10,2)", nullable = false)
-    private double price_buy;
+    @Column(name = "price_buy", columnDefinition = "numeric(10,2)", nullable = false)
+    private double priceBuy;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subcategory_id", nullable = false)

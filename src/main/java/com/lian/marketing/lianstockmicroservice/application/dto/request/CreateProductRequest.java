@@ -14,17 +14,17 @@ public record CreateProductRequest(
 
     @NotNull(message = RequestConstants.PRODUCT_STOCK_MUST_NOT_BE_NULL)
     @PositiveOrZero(message = RequestConstants.PRODUCT_STOCK_MUST_BE_POSITIVE_OR_ZERO)
-    int stock,
+    Integer stock,
 
     @NotNull(message = RequestConstants.PRODUCT_PRICE_SELL_MUST_NOT_BE_NULL)
     @Positive(message = RequestConstants.PRODUCT_PRICE_SELL_MUST_BE_POSITIVE)
-    double priceSell,
+    Double priceSell,
 
     @NotNull(message = RequestConstants.PRODUCT_PRICE_BUY_MUST_NOT_BE_NULL)
     @Positive(message = RequestConstants.PRODUCT_PRICE_BUY_MUST_BE_POSITIVE)
-    double priceBuy,
+    Double priceBuy,
 
-    @NotEmpty(message = RequestConstants.SUBCATEGORY_ID_MUST_NOT_BE_NULL)
+    @NotNull(message = RequestConstants.SUBCATEGORY_ID_MUST_NOT_BE_NULL)
     String subcategoryId
 ) {
 }
