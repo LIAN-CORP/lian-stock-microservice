@@ -14,4 +14,15 @@ public class AdapterConstants {
     public static String getValueSortMappingSubcategory(String field) {
         return sortMappingSubcategory.getOrDefault(field, "name");
     }
+
+    private static final Map<String, String> sortMappingProducts = new HashMap<>() {{
+        put("product", "name");
+        put("subcategory", "subcategory.name");
+        put("category", "subcategory.category.name");
+    }};
+
+    public static String getValueSortMappingProducts(String field) {
+        return sortMappingProducts.getOrDefault(field, "name");
+    }
+
 }
