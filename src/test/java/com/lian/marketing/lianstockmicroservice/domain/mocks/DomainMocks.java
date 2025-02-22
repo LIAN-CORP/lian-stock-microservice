@@ -57,7 +57,7 @@ public class DomainMocks {
                 UUID.randomUUID(),
                 "Subcategory name",
                 "Description",
-                UUID.randomUUID()
+                mockNormalCategory()
         );
     }
 

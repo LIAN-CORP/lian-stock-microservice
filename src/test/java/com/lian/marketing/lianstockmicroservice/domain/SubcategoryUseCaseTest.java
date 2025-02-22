@@ -1,7 +1,9 @@
 package com.lian.marketing.lianstockmicroservice.domain;
 
+import com.lian.marketing.lianstockmicroservice.domain.api.ICategoryServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.api.ISubcategoryServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.api.usecase.SubcategoryUseCase;
+import com.lian.marketing.lianstockmicroservice.domain.exception.CategoryWithIdNotExists;
 import com.lian.marketing.lianstockmicroservice.domain.exception.SubcategoryAlreadyExistsException;
 import com.lian.marketing.lianstockmicroservice.domain.mocks.DomainMocks;
 import com.lian.marketing.lianstockmicroservice.domain.model.Subcategory;
@@ -21,12 +23,14 @@ class SubcategoryUseCaseTest {
     private ISubcategoryServicePort subcategoryServicePort;
     @Mock
     private ISubcategoryPersistencePort subcategoryPersistencePort;
+    @Mock
+    private ICategoryServicePort categoryServicePort;
     private SubcategoryUseCase subcategoryUseCase;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        subcategoryUseCase = new SubcategoryUseCase(subcategoryPersistencePort);
+        subcategoryUseCase = new SubcategoryUseCase(subcategoryPersistencePort, categoryServicePort);
     }
 
     @Test
@@ -34,6 +38,7 @@ class SubcategoryUseCaseTest {
         //Arrange
         Subcategory subcategory = DomainMocks.mockSubcategory();
         when(subcategoryPersistencePort.isSubcategoryExist(subcategory.getName())).thenReturn(false);
+        when(categoryServicePort.categoryExistsByUUID(subcategory.getCategory().getId())).thenReturn(true);
 
         //Act
         subcategoryServicePort.createSubcategory(subcategory);
@@ -54,6 +59,23 @@ class SubcategoryUseCaseTest {
 
         //Assert
         assertThrows(SubcategoryAlreadyExistsException.class, () -> subcategoryUseCase.createSubcategory(subcategory));
+        verify(subcategoryPersistencePort, times(0)).saveSubcategory(subcategory);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCategoryNotExistByUUID() {
+        //Assert
+        Subcategory subcategory = DomainMocks.mockSubcategory();
+        when(subcategoryPersistencePort.isSubcategoryExist(subcategory.getName())).thenReturn(false);
+        when(categoryServicePort.categoryExistsByUUID(subcategory.getCategory().getId())).thenReturn(false);
+
+        //Act
+        subcategoryServicePort.createSubcategory(subcategory);
+
+        //Assert
+        assertThrows(CategoryWithIdNotExists.class, () -> subcategoryUseCase.createSubcategory(subcategory));
+        verify(subcategoryPersistencePort, times(1)).isSubcategoryExist(subcategory.getName());
+        verify(categoryServicePort, times(1)).categoryExistsByUUID(subcategory.getCategory().getId());
         verify(subcategoryPersistencePort, times(0)).saveSubcategory(subcategory);
     }
 
