@@ -59,7 +59,7 @@ jobs:
           path: 'build/reports/jacocoHtml/test/jacocoTestReport.csv'
 
       - name: Send notificacion to Discord
-        uses: always()
+        if: always()
         run: |
           curl -F "file=@build/reports/jacocoHtml/test/jacocoTestReport.csv" \
                -F "payload_json={\"content\": \"📊 Reporte de cobertura de JaCoCo generado!\"}" \
