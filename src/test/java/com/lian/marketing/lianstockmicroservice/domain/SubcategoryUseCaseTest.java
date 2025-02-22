@@ -6,6 +6,7 @@ import com.lian.marketing.lianstockmicroservice.domain.api.usecase.SubcategoryUs
 import com.lian.marketing.lianstockmicroservice.domain.exception.CategoryWithIdNotExists;
 import com.lian.marketing.lianstockmicroservice.domain.exception.SubcategoriesNotFoundException;
 import com.lian.marketing.lianstockmicroservice.domain.exception.SubcategoryAlreadyExistsException;
+import com.lian.marketing.lianstockmicroservice.domain.exception.SubcategoryNotFoundException;
 import com.lian.marketing.lianstockmicroservice.domain.mocks.DomainMocks;
 import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
 import com.lian.marketing.lianstockmicroservice.domain.model.Subcategory;
@@ -114,6 +115,34 @@ class SubcategoryUseCaseTest {
         //Assert
         assertEquals(content, result);
         verify(subcategoryPersistencePort, times(1)).findAllSubcategory(page, size, isAsc, sortBy);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenSubcategoryNotFoundByUUID() {
+        //Arrange
+        Subcategory subcategory = DomainMocks.mockSubcategory();
+        when(subcategoryPersistencePort.subcategoryExistsByUUID(subcategory.getCategory().getId())).thenReturn(false);
+
+        //Act
+        subcategoryServicePort.subcategoryExistsByUUID(subcategory.getCategory().getId());
+
+        //Assert
+        assertThrows(SubcategoryNotFoundException.class, () -> subcategoryUseCase.subcategoryExistsByUUID(subcategory.getCategory().getId()));
+        verify(subcategoryPersistencePort, times(1)).subcategoryExistsByUUID(subcategory.getCategory().getId());
+    }
+
+    @Test
+    void shouldNotThrowExceptionWhenSubcategoryIsFoundByUUID() {
+        //Arrange
+        Subcategory subcategory = DomainMocks.mockSubcategory();
+        when(subcategoryPersistencePort.subcategoryExistsByUUID(subcategory.getCategory().getId())).thenReturn(true);
+
+        //Act
+        subcategoryServicePort.subcategoryExistsByUUID(subcategory.getCategory().getId());
+
+        //Assert
+        assertDoesNotThrow(() -> subcategoryUseCase.subcategoryExistsByUUID(subcategory.getCategory().getId()));
+        verify(subcategoryPersistencePort, times(1)).subcategoryExistsByUUID(subcategory.getCategory().getId());
     }
 
 }
