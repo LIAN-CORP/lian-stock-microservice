@@ -4,7 +4,9 @@ import com.lian.marketing.lianstockmicroservice.application.dto.request.CreatePr
 import com.lian.marketing.lianstockmicroservice.application.mapper.IProductMapper;
 import com.lian.marketing.lianstockmicroservice.domain.api.IProductServicePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class ProductHandler {
 
