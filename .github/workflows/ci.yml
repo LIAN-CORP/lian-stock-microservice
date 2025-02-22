@@ -15,21 +15,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    services:
-      database:
-        image: postgres:latest
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_DATABASE: lian_stock
-          POSTGRES_USER: lian_admin
-          POSTGRES_PASSWORD: testpass
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -52,6 +37,13 @@ jobs:
           generate-branches-badge: 'true'
           jacoco-csv-file: 'build/reports/jacocoHtml/test/jacocoTestReport.csv'
 
+      - name: Extract coverage from JaCoCo XML
+        run: |
+          COVERAGE=$(xmllint --xpath "string(/report/counter[@type='INSTRUCTION']/@covered)" build/reports/jacocoHtml/test/jacocoTestReport.xml)
+          TOTAL=$(xmllint --xpath "string(/report/counter[@type='INSTRUCTION']/@missed)" build/reports/jacocoHtml/test/jacocoTestReport.xml)
+          COVERAGE_PERCENTAGE=$(awk "BEGIN {printf \"%.2f\", $COVERAGE / ($COVERAGE + $TOTAL) * 100}")
+          echo "COVERAGE_PERCENTAGE=$COVERAGE_PERCENTAGE" >> $GITHUB_ENV
+
       - name: Upload JaCoCo CSV Report
         uses: actions/upload-artifact@v4
         with:
@@ -62,5 +54,5 @@ jobs:
         if: always()
         run: |
           curl -F "file=@build/reports/jacocoHtml/test/jacocoTestReport.csv" \
-               -F "payload_json={\"content\": \"📊 Reporte de cobertura de JaCoCo generado!\"}" \
+               -F "payload_json={\"content\": \"📊 **Coverage Test:** ${{ env.COVERAGE_PERCENTAGE }}%\n🔍 Reporte de cobertura adjunto en .csv\"}" \
                ${{ secrets.DISCORD_WEBHOOK_URL }}
