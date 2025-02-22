@@ -5,7 +5,9 @@ import com.lian.marketing.lianstockmicroservice.domain.model.Subcategory;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+import java.util.UUID;
+
+@Mapper(componentModel = "spring", imports = {UUID.class})
 public interface ISubcategoryMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "categoryId", expression = "java(UUID.fromString(request.categoryId()))")
