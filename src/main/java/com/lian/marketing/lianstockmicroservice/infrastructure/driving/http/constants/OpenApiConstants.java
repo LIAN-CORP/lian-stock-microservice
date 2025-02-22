@@ -22,4 +22,9 @@ public class OpenApiConstants {
     public static final String CATEGORIES_DEFAULT_PAGE = "0";
     public static final String CATEGORIES_DEFAULT_SIZE = "10";
     public static final String CATEGORIES_DEFAULT_IS_ASC = "true";
+
+    //Subcategory
+    public static final String SUBCATEGORY_POST_SUMMARY = "Save new subcategory";
+    public static final String SUBCATEGORY_DESCRIPTION_201 = "Subcategory saved";
+    public static final String SUBCATEGORY_DESCRIPTION_400 = "Invalid subcategory";
 }
