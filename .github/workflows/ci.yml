@@ -51,3 +51,16 @@ jobs:
         with:
           generate-branches-badge: 'true'
           jacoco-csv-file: 'build/reports/jacocoHtml/test/jacocoTestReport.csv'
+
+      - name: Upload JaCoCo CSV Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: 'jacoco-report'
+          path: 'build/reports/jacocoHtml/test/jacocoTestReport.csv'
+
+      - name: Send notificacion to Discord
+        uses: always()
+        run: |
+          curl -F "file=@build/reports/jacocoHtml/test/jacocoTestReport.csv" \
+               -F "payload_json={\"content\": \"📊 Reporte de cobertura de JaCoCo generado!\"}" \
+               ${{ secrets.DISCORD_WEBHOOK_URL }}
