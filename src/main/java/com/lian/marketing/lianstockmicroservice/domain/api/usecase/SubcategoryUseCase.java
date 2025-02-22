@@ -6,10 +6,13 @@ import com.lian.marketing.lianstockmicroservice.domain.constants.ExceptionConsta
 import com.lian.marketing.lianstockmicroservice.domain.exception.CategoryWithIdNotExists;
 import com.lian.marketing.lianstockmicroservice.domain.exception.SubcategoriesNotFoundException;
 import com.lian.marketing.lianstockmicroservice.domain.exception.SubcategoryAlreadyExistsException;
+import com.lian.marketing.lianstockmicroservice.domain.exception.SubcategoryNotFoundException;
 import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
 import com.lian.marketing.lianstockmicroservice.domain.model.Subcategory;
 import com.lian.marketing.lianstockmicroservice.domain.spi.ISubcategoryPersistencePort;
 import lombok.RequiredArgsConstructor;
+
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class SubcategoryUseCase implements ISubcategoryServicePort {
@@ -35,5 +38,12 @@ public class SubcategoryUseCase implements ISubcategoryServicePort {
             throw new SubcategoriesNotFoundException(ExceptionConstants.NO_RECORDS_FOR_SUBCATEGORIES);
         }
         return content;
+    }
+
+    @Override
+    public void subcategoryExistsByUUID(UUID uuid) {
+        if(!subcategoryPersistencePort.subcategoryExistsByUUID(uuid)) {
+            throw new SubcategoryNotFoundException(String.format(ExceptionConstants.SUBCATEGORY_WITH_ID_NOT_EXISTS, uuid));
+        }
     }
 }
