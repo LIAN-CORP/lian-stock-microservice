@@ -61,4 +61,36 @@ public class DomainMocks {
         );
     }
 
+    public static List<Subcategory> mockEmptySubcategoryList() {
+        return Collections.emptyList();
+    }
+
+    public static ContentPage<Subcategory> mockSubcategoryPageWithEmptyContent() {
+        return new ContentPage<>(
+                1,
+                0,
+                0,
+                0,
+                true,
+                true,
+                mockEmptySubcategoryList()
+        );
+    }
+
+    public static List<Subcategory> mockSubcategoryList() {
+        return List.of(mockSubcategory());
+    }
+
+    public static ContentPage<Subcategory> mockSubcategoryPageWithContent() {
+        return new ContentPage<>(
+                0,
+                0,
+                0,
+                0,
+                true,
+                true,
+                mockSubcategoryList()
+        );
+    }
+
 }
