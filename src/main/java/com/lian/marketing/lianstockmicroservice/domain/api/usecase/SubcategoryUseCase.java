@@ -1,7 +1,9 @@
 package com.lian.marketing.lianstockmicroservice.domain.api.usecase;
 
+import com.lian.marketing.lianstockmicroservice.domain.api.ICategoryServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.api.ISubcategoryServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.constants.ExceptionConstants;
+import com.lian.marketing.lianstockmicroservice.domain.exception.CategoryWithIdNotExists;
 import com.lian.marketing.lianstockmicroservice.domain.exception.SubcategoriesNotFoundException;
 import com.lian.marketing.lianstockmicroservice.domain.exception.SubcategoryAlreadyExistsException;
 import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
@@ -13,11 +15,15 @@ import lombok.RequiredArgsConstructor;
 public class SubcategoryUseCase implements ISubcategoryServicePort {
 
     private final ISubcategoryPersistencePort subcategoryPersistencePort;
+    private final ICategoryServicePort categoryServicePort;
 
     @Override
     public void createSubcategory(Subcategory subcategory) {
         if(subcategoryPersistencePort.isSubcategoryExist(subcategory.getName())) {
             throw new SubcategoryAlreadyExistsException(String.format(ExceptionConstants.SUBCATEGORY_ALREADY_EXISTS_WITH_NAME, subcategory.getName()));
+        }
+        if (!categoryServicePort.categoryExistsByUUID(subcategory.getCategory().getId())) {
+            throw new CategoryWithIdNotExists(String.format(ExceptionConstants.CATEGORY_WITH_ID_NOT_EXISTS, subcategory.getCategory().getId()));
         }
         subcategoryPersistencePort.saveSubcategory(subcategory);
     }

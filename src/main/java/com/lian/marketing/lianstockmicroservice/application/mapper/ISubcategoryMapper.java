@@ -9,10 +9,11 @@ import org.mapstruct.Mapping;
 import java.util.List;
 import java.util.UUID;
 
-@Mapper(componentModel = "spring", imports = {UUID.class})
+@Mapper(componentModel = "spring", uses = {ICategoryMapper.class})
 public interface ISubcategoryMapper {
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "categoryId", expression = "java(UUID.fromString(request.categoryId()))")
+    //@Mapping(target = "categoryId", expression = "java(UUID.fromString(request.categoryId()))")
+    @Mapping(target = "category.id", source = "categoryId")
     Subcategory toModelFromRequest(CreateSubcategoryRequest request);
     SubcategoryResponse fromModelToResponse(Subcategory subcategory);
     List<SubcategoryResponse> toResponseModelListFromModelList(List<Subcategory> subcategories);

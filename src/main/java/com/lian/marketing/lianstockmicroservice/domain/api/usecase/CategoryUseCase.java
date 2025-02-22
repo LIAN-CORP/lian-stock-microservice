@@ -8,6 +8,8 @@ import com.lian.marketing.lianstockmicroservice.domain.model.Category;
 import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
 import com.lian.marketing.lianstockmicroservice.domain.spi.ICategoryPersistencePort;
 
+import java.util.UUID;
+
 public class CategoryUseCase implements ICategoryServicePort {
 
     private final ICategoryPersistencePort categoryPersistencePort;
@@ -32,6 +34,11 @@ public class CategoryUseCase implements ICategoryServicePort {
             throw new CategoriesNotFoundException(ExceptionConstants.NO_RECORDS_FOR_CATEGORIES);
         }
         return contentPage;
+    }
+
+    @Override
+    public boolean categoryExistsByUUID(UUID uuid) {
+        return categoryPersistencePort.categoryExistsByUUID(uuid);
     }
 
 }

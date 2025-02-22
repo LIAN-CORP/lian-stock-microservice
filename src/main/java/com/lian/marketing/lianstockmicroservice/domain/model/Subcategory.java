@@ -15,5 +15,5 @@ public class Subcategory {
     private UUID id;
     private String name;
     private String description;
-    private UUID categoryId;
+    private Category category;
 }
