@@ -106,4 +106,36 @@ public class DomainMocks {
         );
     }
 
+    public static List<Product> mockProductList() {
+        return List.of(mockProduct());
+    }
+
+    public static ContentPage<Product> mockProductPageContent() {
+        return new ContentPage<>(
+                1,
+                10,
+                0,
+                10,
+                true,
+                false,
+                mockProductList()
+        );
+    }
+
+    public static List<Product> mockEmptyProductList() {
+        return Collections.emptyList();
+    }
+
+    public static ContentPage<Product> mockProductPageWithEmptyContent() {
+        return new ContentPage<>(
+                1,
+                10,
+                0,
+                10,
+                true,
+                false,
+                mockEmptyProductList()
+        );
+    }
+
 }

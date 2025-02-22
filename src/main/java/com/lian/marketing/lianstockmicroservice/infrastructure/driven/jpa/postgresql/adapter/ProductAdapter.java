@@ -1,5 +1,6 @@
 package com.lian.marketing.lianstockmicroservice.infrastructure.driven.jpa.postgresql.adapter;
 
+import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
 import com.lian.marketing.lianstockmicroservice.domain.model.Product;
 import com.lian.marketing.lianstockmicroservice.domain.spi.IProductPersistencePort;
 import com.lian.marketing.lianstockmicroservice.infrastructure.driven.jpa.postgresql.mapper.IProductEntityMapper;
@@ -15,5 +16,10 @@ public class ProductAdapter implements IProductPersistencePort {
     @Override
     public void saveProduct(Product product) {
         productRepository.save(productEntityMapper.toEntity(product));
+    }
+
+    @Override
+    public ContentPage<Product> findAllProducts(int page, int size, boolean isAsc, String sortBy) {
+        return null;
     }
 }
