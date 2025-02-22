@@ -39,9 +39,9 @@ jobs:
 
       - name: Extract coverage from JaCoCo XML
         run: |
-          COVERAGE=$(xmllint --xpath "string(/report/counter[@type='INSTRUCTION']/@covered)" build/reports/jacocoHtml/test/jacocoTestReport.xml)
-          TOTAL=$(xmllint --xpath "string(/report/counter[@type='INSTRUCTION']/@missed)" build/reports/jacocoHtml/test/jacocoTestReport.xml)
-          COVERAGE_PERCENTAGE=$(awk "BEGIN {printf \"%.2f\", $COVERAGE / ($COVERAGE + $TOTAL) * 100}")
+          COVERED=$(grep -oP 'counter type="INSTRUCTION" covered="\K\d+' build/reports/jacocoHtml/test/jacocoTestReport.xml)
+          MISSED=$(grep -oP 'counter type="INSTRUCTION" missed="\K\d+' build/reports/jacocoHtml/test/jacocoTestReport.xml)
+          COVERAGE_PERCENTAGE=$(awk "BEGIN {printf \"%.2f\", $COVERED / ($COVERED + $MISSED) * 100}")
           echo "COVERAGE_PERCENTAGE=$COVERAGE_PERCENTAGE" >> $GITHUB_ENV
 
       - name: Upload JaCoCo CSV Report
