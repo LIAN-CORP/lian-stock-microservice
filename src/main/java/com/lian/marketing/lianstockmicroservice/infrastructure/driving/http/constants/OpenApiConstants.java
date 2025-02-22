@@ -19,9 +19,10 @@ public class OpenApiConstants {
     public static final String CATEGORIES_GET_ALL_DESCRIPTION_201 = "Found categories records";
 
     //Paged
-    public static final String CATEGORIES_DEFAULT_PAGE = "0";
-    public static final String CATEGORIES_DEFAULT_SIZE = "10";
-    public static final String CATEGORIES_DEFAULT_IS_ASC = "true";
+    public static final String DEFAULT_PAGE = "0";
+    public static final String DEFAULT_SIZE = "10";
+    public static final String DEFAULT_IS_ASC = "true";
+    public static final String DEFAULT_SORT_BY = "name";
 
     //Subcategory
     public static final String SUBCATEGORY_POST_SUMMARY = "Save new subcategory";

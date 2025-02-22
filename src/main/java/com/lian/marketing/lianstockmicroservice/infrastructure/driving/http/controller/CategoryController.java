@@ -54,9 +54,9 @@ public class CategoryController {
     })
     @GetMapping
     public ResponseEntity<ContentPage<CategoryResponse>> getAllCategories(
-            @RequestParam(defaultValue = OpenApiConstants.CATEGORIES_DEFAULT_PAGE) int page,
-            @RequestParam(defaultValue = OpenApiConstants.CATEGORIES_DEFAULT_SIZE) int size,
-            @RequestParam(defaultValue = OpenApiConstants.CATEGORIES_DEFAULT_IS_ASC) boolean isAsc
+            @RequestParam(defaultValue = OpenApiConstants.DEFAULT_PAGE) int page,
+            @RequestParam(defaultValue = OpenApiConstants.DEFAULT_SIZE) int size,
+            @RequestParam(defaultValue = OpenApiConstants.DEFAULT_IS_ASC) boolean isAsc
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 categoryHandler.findAllCategories(page, size, isAsc)
