@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class SubcategoryAdapter implements ISubcategoryPersistencePort {
@@ -48,5 +49,10 @@ public class SubcategoryAdapter implements ISubcategoryPersistencePort {
                 subcategoryPage.isLast(),
                 subcategoryList
         );
+    }
+
+    @Override
+    public boolean subcategoryExistsByUUID(UUID uuid) {
+        return subcategoryRepository.existsById(uuid);
     }
 }
