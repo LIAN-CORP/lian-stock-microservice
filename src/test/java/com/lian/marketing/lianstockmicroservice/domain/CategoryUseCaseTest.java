@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -87,5 +89,20 @@ class CategoryUseCaseTest {
         //Assert
         assertThrows(CategoriesNotFoundException.class, () -> categoryUseCase.findAllCategories(page, size, isAsc));
         verify(categoryPersistencePort, times(1)).findAllCategories(page, size, isAsc);
+    }
+
+    @Test
+    void shouldReturnAnyBooleanToCategoryExistsByUUID() {
+        //Arrange
+        UUID uuid = UUID.randomUUID();
+        boolean returnBoolean = anyBoolean();
+        when(categoryPersistencePort.categoryExistsByUUID(uuid)).thenReturn(returnBoolean);
+
+        //Act
+        boolean result = categoryUseCase.categoryExistsByUUID(uuid);
+
+        //Assert
+        assertEquals(result, returnBoolean);
+        verify(categoryPersistencePort, times(1)).categoryExistsByUUID(uuid);
     }
 }

@@ -7,11 +7,11 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ICategoryEntityMapper.class})
 public interface ISubcategoryEntityMapper {
-    @Mapping(source = "categoryId", target = "category.id")
+    //@Mapping(source = "categoryId", target = "category.id")
     SubcategoryEntity fromModelToSubcategoryEntity(Subcategory subcategory);
-    @Mapping(source = "category.id", target = "categoryId")
+    //@Mapping(source = "category.id", target = "categoryId")
     Subcategory fromEntityToSubcategoryModel(SubcategoryEntity subcategoryEntity);
     List<Subcategory> fromEntityToSubcategoryModelList(List<SubcategoryEntity> subcategoryEntities);
 }

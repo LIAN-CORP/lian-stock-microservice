@@ -1,5 +1,6 @@
 package com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.exceptionhandler;
 
+import com.lian.marketing.lianstockmicroservice.domain.exception.SubcategoriesNotFoundException;
 import com.lian.marketing.lianstockmicroservice.domain.exception.SubcategoryAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,16 @@ public class SubcategoryControllerAdvisor {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(
                 HttpStatus.BAD_REQUEST.toString(),
                 HttpStatus.BAD_REQUEST.value(),
+                e.getMessage(),
+                LocalDateTime.now()
+        ));
+    }
+
+    @ExceptionHandler(SubcategoriesNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleSubcategoriesNotFoundException(SubcategoriesNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
+                HttpStatus.NOT_FOUND.toString(),
+                HttpStatus.NOT_FOUND.value(),
                 e.getMessage(),
                 LocalDateTime.now()
         ));

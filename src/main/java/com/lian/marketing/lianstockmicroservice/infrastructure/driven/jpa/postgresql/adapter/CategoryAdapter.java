@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class CategoryAdapter implements ICategoryPersistencePort {
@@ -45,5 +46,10 @@ public class CategoryAdapter implements ICategoryPersistencePort {
                 categoryEntityPage.isLast(),
                 categoryList
         );
+    }
+
+    @Override
+    public boolean categoryExistsByUUID(UUID uuid) {
+        return categoryRepository.existsById(uuid);
     }
 }

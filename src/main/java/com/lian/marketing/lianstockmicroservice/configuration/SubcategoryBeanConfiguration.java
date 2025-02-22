@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class SubcategoryBeanConfiguration {
     private final ISubcategoryEntityMapper subcategoryEntityMapper;
     private final ISubcategoryRespository subcategoryRespository;
+    private final CategoryBeanConfiguration categoryBeanConfiguration;
 
     @Bean
     public ISubcategoryPersistencePort subcategoryPersistencePort() {
@@ -23,6 +24,6 @@ public class SubcategoryBeanConfiguration {
 
     @Bean
     public ISubcategoryServicePort subcategoryServicePort() {
-        return new SubcategoryUseCase(subcategoryPersistencePort());
+        return new SubcategoryUseCase(subcategoryPersistencePort(), categoryBeanConfiguration.categoryServicePort());
     }
 }
