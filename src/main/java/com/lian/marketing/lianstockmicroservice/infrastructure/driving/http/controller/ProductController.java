@@ -8,8 +8,10 @@ import com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.cons
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/product")
@@ -18,9 +20,12 @@ public class ProductController {
 
     private final ProductHandler productHandler;
 
-    @PostMapping
-    public ResponseEntity<Void> createProduct(@Valid @RequestBody CreateProductRequest request) {
-        productHandler.createProduct(request);
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> createProduct(
+            @RequestPart(value = "product", required = true) @Valid CreateProductRequest request,
+            @RequestParam(value = "image", required = false) MultipartFile imageFile
+    ) {
+        productHandler.createProduct(request, imageFile);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

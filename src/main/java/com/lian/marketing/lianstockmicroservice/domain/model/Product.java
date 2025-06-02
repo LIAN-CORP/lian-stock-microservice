@@ -19,4 +19,5 @@ public class Product {
     private Double priceSell;
     private Double priceBuy;
     private Subcategory subcategory;
+    private String imagePath;
 }

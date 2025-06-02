@@ -39,4 +39,7 @@ public class ProductEntity {
     @JoinColumn(name = "subcategory_id", nullable = false)
     private SubcategoryEntity subcategory;
 
+    @Column(name = "image_path")
+    private String imagePath;
+
 }

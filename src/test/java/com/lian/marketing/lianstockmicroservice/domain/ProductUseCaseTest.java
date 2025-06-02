@@ -1,6 +1,7 @@
 package com.lian.marketing.lianstockmicroservice.domain;
 
 import com.lian.marketing.lianstockmicroservice.domain.api.IProductServicePort;
+import com.lian.marketing.lianstockmicroservice.domain.api.IS3ServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.api.ISubcategoryServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.api.usecase.ProductUseCase;
 import com.lian.marketing.lianstockmicroservice.domain.exception.ProductsNotFoundException;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.mock.web.MockMultipartFile;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -25,24 +27,35 @@ class ProductUseCaseTest {
     private IProductServicePort productServicePort;
     @Mock
     private ISubcategoryServicePort subcategoryServicePort;
+    @Mock
+    private IS3ServicePort s3ServicePort;
     private ProductUseCase productUseCase;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        productUseCase = new ProductUseCase(productPersistencePort, subcategoryServicePort);
+        productUseCase = new ProductUseCase(productPersistencePort, subcategoryServicePort, s3ServicePort);
     }
 
     @Test
     void ShouldSaveProductSuccessfully() {
         //Arrange
         Product product = DomainMocks.mockProduct();
+        MockMultipartFile mockFile = new MockMultipartFile(
+                "file",
+                "image.png",
+                "image/jpeg",
+                "contenido de imagen".getBytes()
+        );
+        String imagePath = "https://bucket.s3.amazonaws.com/image.jpg";
+
+        when(s3ServicePort.saveImage(mockFile)).thenReturn(imagePath);
 
         //Act
-        productServicePort.createProduct(product);
+        productServicePort.createProduct(product, mockFile);
 
         //Assert
-        assertDoesNotThrow(() -> productUseCase.createProduct(product));
+        assertDoesNotThrow(() -> productUseCase.createProduct(product, mockFile));
         verify(subcategoryServicePort, times(1)).subcategoryExistsByUUID(product.getSubcategory().getId());
         verify(productPersistencePort, times(1)).saveProduct(product);
     }
@@ -51,12 +64,22 @@ class ProductUseCaseTest {
     void ShouldThrowExceptionWhenSubcategoryDoesNotExist() {
         //Arrange
         Product product = DomainMocks.mockProduct();
+        MockMultipartFile mockFile = new MockMultipartFile(
+                "file",
+                "test-image.png",
+                "image/jpeg",
+                "contenido de imagen".getBytes()
+        );
         doThrow(new SubcategoryNotFoundException(""))
                 .when(subcategoryServicePort)
                 .subcategoryExistsByUUID(product.getSubcategory().getId());
 
+        String imagePath = "https://bucket.s3.amazonaws.com/image.jpg";
+
+        when(s3ServicePort.saveImage(mockFile)).thenReturn(imagePath);
+
         //Act
-        productServicePort.createProduct(product);
+        productServicePort.createProduct(product, mockFile);
 
         //Assert
         assertThrows(SubcategoryNotFoundException.class, () -> subcategoryServicePort.subcategoryExistsByUUID(product.getSubcategory().getId()));

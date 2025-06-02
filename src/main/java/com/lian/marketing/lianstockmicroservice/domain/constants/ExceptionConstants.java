@@ -12,4 +12,9 @@ public class ExceptionConstants {
     public static final String SUBCATEGORY_WITH_ID_NOT_EXISTS = "Subcategory with id %s not exists";
 
     public static final String NO_RECORDS_FOR_PRODUCTS = "No records for products";
+
+    public static final String FILE_UPLOAD_FAILED = "File upload failed: %s";
+    public static final String SDK_AMAZON_EXCEPTION = "SDK AWS exception: %s";
+    public static final String FILE_DOWNLOAD_FAILED = "File download failed: %s";
+    public static final String AMAZON_S3_CLIENT_FAILED = "Amazon S3 Client failed: %s";
 }
