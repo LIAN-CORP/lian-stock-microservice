@@ -102,7 +102,8 @@ public class DomainMocks {
                 1,
                 100.0,
                 100.0,
-                mockSubcategory()
+                mockSubcategory(),
+                ""
         );
     }
 

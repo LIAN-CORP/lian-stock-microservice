@@ -8,6 +8,7 @@ import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
 import com.lian.marketing.lianstockmicroservice.domain.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class ProductHandler {
     private final IProductMapper productMapper;
     private final IProductServicePort productServicePort;
 
-    public void createProduct(CreateProductRequest request) {
-        productServicePort.createProduct(productMapper.toModel(request));
+    public void createProduct(CreateProductRequest request, MultipartFile file) {
+        productServicePort.createProduct(productMapper.toModel(request), file);
     }
 
     public ContentPage<ProductResponse> findAllProducts(int page, int size, boolean isAsc, String sortBy) {

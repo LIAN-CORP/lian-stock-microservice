@@ -17,6 +17,7 @@ public class ProductBeanConfiguration {
     private final IProductRepository productRepository;
     private final IProductEntityMapper productEntityMapper;
     private final SubcategoryBeanConfiguration subcategoryBeanConfiguration;
+    private final AwsConfiguration awsConfiguration;
 
     @Bean
     public IProductPersistencePort productPersistencePort() {
@@ -25,7 +26,11 @@ public class ProductBeanConfiguration {
 
     @Bean
     public IProductServicePort productServicePort() {
-        return new ProductUseCase(productPersistencePort(), subcategoryBeanConfiguration.subcategoryServicePort());
+        return new ProductUseCase(
+                productPersistencePort(),
+                subcategoryBeanConfiguration.subcategoryServicePort(),
+                awsConfiguration.s3ServicePort()
+        );
     }
 
 }
