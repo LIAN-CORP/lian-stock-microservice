@@ -41,6 +41,19 @@ public class SubcategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Operation(summary = OpenApiConstants.SUBCATEGORY_GET_ALL_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.SUBCATEGORY_GET_ALL_DESCRIPTION_200,
+                content = {
+                    @Content(schema = @Schema(implementation = ContentPage.class))
+                }
+            ),
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.CATEGORY_DESCRIPTION_404,
+                content = {
+                    @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = ExceptionResponse.class))
+                }
+            )
+    })
     @GetMapping
     public ResponseEntity<ContentPage<SubcategoryResponse>> getAllSubcategories(
             @RequestParam(defaultValue = OpenApiConstants.DEFAULT_PAGE) int page,
