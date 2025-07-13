@@ -1,10 +1,6 @@
 name: CI Spring with Gradle
 
 on:
-  push:
-    branches:
-      - main
-      - develop
   pull_request:
     branches:
       - main
@@ -26,13 +22,36 @@ jobs:
           java-version: '21'
 
       - name: Grant execute permission for gradlew
-        uses: chmod +x gradlew
+        run: chmod +x gradlew
 
-      - name: Run test
-        uses: ./gradlew test
+      - name: Run tests
+        run: ./gradlew test
 
       - name: Generate JaCoCo Badge
         uses: cicirello/jacoco-badge-generator@v2
         with:
           generate-branches-badge: 'true'
-          jacoco-csv-file: 'target/site/jacoco/jacoco.csv'
+          jacoco-csv-file: 'build/reports/jacocoHtml/test/jacocoTestReport.csv'
+
+      - name: Install xmllint
+        run: sudo apt-get install -y libxml2-utils
+
+      - name: Extract coverage from JaCoCo XML
+        run: |
+          COVERAGE=$(xmllint --xpath "string(/report/counter[@type='INSTRUCTION']/@covered)" build/reports/jacocoHtml/test/jacocoTestReport.xml)
+          TOTAL=$(xmllint --xpath "string(/report/counter[@type='INSTRUCTION']/@missed)" build/reports/jacocoHtml/test/jacocoTestReport.xml)
+          COVERAGE_PERCENTAGE=$(awk "BEGIN {printf \"%.2f\", $COVERAGE / ($COVERAGE + $TOTAL) * 100}")
+          echo "COVERAGE_PERCENTAGE=$COVERAGE_PERCENTAGE" >> $GITHUB_ENV
+
+      - name: Upload JaCoCo CSV Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: 'jacoco-report'
+          path: 'build/reports/jacocoHtml/test/jacocoTestReport.csv'
+
+      - name: Send notificacion to Discord
+        if: always()
+        run: |
+          curl -F "file=@build/reports/jacocoHtml/test/jacocoTestReport.csv" \
+               -F "payload_json={\"content\": \"📊 **Coverage Test:** ${{ env.COVERAGE_PERCENTAGE }}%\n🔍 Reporte de cobertura adjunto en .csv\"}" \
+               ${{ secrets.DISCORD_WEBHOOK_URL }}

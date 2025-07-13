@@ -39,6 +39,32 @@ dependencies {
     // Mapstruct
     implementation 'org.mapstruct:mapstruct:1.5.2.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
+    //OPENAPI
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0'
+    //implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+    // Netflix Eureka
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:4.2.1'
+    // AWS S3
+    implementation 'com.amazonaws:aws-java-sdk:1.12.774'
+
+    //Vulneravities
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.4.3'
+    implementation 'org.springframework:spring-web:6.2.8'
+    implementation 'net.minidev:json-smart:2.5.2'
+    implementation 'io.netty:netty-handler:4.1.118.Final'
+    implementation 'io.netty:netty-common:4.1.118.Final'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-core:11.0.8'
+    implementation 'com.thoughtworks.xstream:xstream:1.4.21'
+    implementation 'org.springframework.security:spring-security-crypto:6.4.4'
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'org.apache.httpcomponents.client5' &&
+                details.requested.name == 'httpclient5') {
+            details.useVersion '5.4.3'
+        }
+    }
 }
 
 tasks.named('test') {
@@ -49,7 +75,7 @@ tasks.named('test') {
 jacocoTestReport {
     dependsOn test
     reports {
-        xml.required = false
+        xml.required = true
         csv.required = true
         html.outputLocation = layout.buildDirectory.dir('reports/jacocoHtml')
     }
@@ -58,7 +84,10 @@ jacocoTestReport {
                 files(classDirectories.files.collect{
                     fileTree(dir: it, excludes: [
                             "**/mapper/**",
-                            "**/dto/**"
+                            "**/dto/**",
+                            "**/infrastructure/**",
+                            "**/handler/**",
+                            "**/configuration/**"
                     ])
                 })
         )
