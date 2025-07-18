@@ -1,6 +1,7 @@
 package com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.controller;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateSubcategoryRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryItemResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryResponse;
 import com.lian.marketing.lianstockmicroservice.application.handler.SubcategoryHandler;
 import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
@@ -16,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/subcategory")
@@ -65,4 +68,17 @@ public class SubcategoryController {
                 subcategoryHandler.findAllSubcategories(page, size, isAsc, sortBy)
         );
     }
+    @GetMapping("/parent/{id}")
+    public ResponseEntity<ContentPage<SubcategoryItemResponse>> getAllSubcategoriesByCategory(
+            @RequestParam(defaultValue = OpenApiConstants.DEFAULT_PAGE) int page,
+            @RequestParam(defaultValue = OpenApiConstants.DEFAULT_SIZE) int size,
+            @RequestParam(defaultValue = OpenApiConstants.DEFAULT_IS_ASC) boolean isAsc,
+            @RequestParam(defaultValue = OpenApiConstants.DEFAULT_SORT_BY) String sortBy,
+            @PathVariable("id") UUID categoryId
+    ){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                subcategoryHandler.findAllSubcategoriesByCategory(page, size, isAsc, sortBy, categoryId)
+        );
+    }
+
 }

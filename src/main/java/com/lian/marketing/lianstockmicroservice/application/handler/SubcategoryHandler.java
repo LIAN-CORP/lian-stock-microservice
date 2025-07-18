@@ -1,6 +1,7 @@
 package com.lian.marketing.lianstockmicroservice.application.handler;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateSubcategoryRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryItemResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryResponse;
 import com.lian.marketing.lianstockmicroservice.application.mapper.ISubcategoryMapper;
 import com.lian.marketing.lianstockmicroservice.domain.api.ISubcategoryServicePort;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +27,19 @@ public class SubcategoryHandler {
     public ContentPage<SubcategoryResponse> findAllSubcategories(int page, int size, boolean isAsc, String sortBy) {
         ContentPage<Subcategory> contentPage = subcategoryServicePort.findAllSubcategories(page, size, isAsc, sortBy);
         List<SubcategoryResponse> subcategoryResponseList = subcategoryMapper.toResponseModelListFromModelList(contentPage.getContent());
+        return new ContentPage<>(
+                contentPage.getTotalPage(),
+                contentPage.getTotalElements(),
+                contentPage.getPageNumber(),
+                contentPage.getPageSize(),
+                contentPage.isFirst(),
+                contentPage.isLast(),
+                subcategoryResponseList
+        );
+    }
+    public ContentPage<SubcategoryItemResponse> findAllSubcategoriesByCategory(int page, int size, boolean isAsc, String sortBy, UUID categoryId) {
+        ContentPage<Subcategory> contentPage = subcategoryServicePort.findAllSubcategoriesByCategory(page, size, isAsc, sortBy,categoryId);
+        List<SubcategoryItemResponse> subcategoryResponseList = subcategoryMapper.toItemResponseModelListFromModelList(contentPage.getContent());
         return new ContentPage<>(
                 contentPage.getTotalPage(),
                 contentPage.getTotalElements(),
