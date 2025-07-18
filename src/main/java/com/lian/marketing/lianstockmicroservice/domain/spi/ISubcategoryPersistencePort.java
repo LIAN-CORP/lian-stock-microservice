@@ -9,5 +9,6 @@ public interface ISubcategoryPersistencePort {
     void saveSubcategory(Subcategory subcategory);
     boolean isSubcategoryExist(String name);
     ContentPage<Subcategory> findAllSubcategory(int page, int size, boolean isAsc, String sortBy);
+    ContentPage<Subcategory> findAllSubcategoryByCategory(int page, int size, boolean isAsc, String sortBy, UUID categoryId);
     boolean subcategoryExistsByUUID(UUID uuid);
 }

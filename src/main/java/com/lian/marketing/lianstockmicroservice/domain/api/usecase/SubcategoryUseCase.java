@@ -41,6 +41,15 @@ public class SubcategoryUseCase implements ISubcategoryServicePort {
     }
 
     @Override
+    public ContentPage<Subcategory> findAllSubcategoriesByCategory(int page, int size, boolean isAsc, String sortBy, UUID categoryId) {
+        ContentPage<Subcategory> content = subcategoryPersistencePort.findAllSubcategoryByCategory(page, size, isAsc, sortBy, categoryId);
+        if(content.getContent().isEmpty()) {
+            throw new SubcategoriesNotFoundException(ExceptionConstants.NO_RECORDS_FOR_SUBCATEGORIES);
+        }
+        return content;
+    }
+
+    @Override
     public void subcategoryExistsByUUID(UUID uuid) {
         if(!subcategoryPersistencePort.subcategoryExistsByUUID(uuid)) {
             throw new SubcategoryNotFoundException(String.format(ExceptionConstants.SUBCATEGORY_WITH_ID_NOT_EXISTS, uuid));

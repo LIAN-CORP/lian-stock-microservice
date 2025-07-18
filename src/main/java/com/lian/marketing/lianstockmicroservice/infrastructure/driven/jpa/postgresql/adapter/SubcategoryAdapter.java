@@ -52,6 +52,26 @@ public class SubcategoryAdapter implements ISubcategoryPersistencePort {
     }
 
     @Override
+    public ContentPage<Subcategory> findAllSubcategoryByCategory(int page, int size, boolean isAsc, String sortBy, UUID categoryId) {
+        Sort sort = isAsc
+                ? Sort.by(AdapterConstants.getValueSortMappingSubcategory(sortBy)).ascending()
+                : Sort.by(AdapterConstants.getValueSortMappingSubcategory(sortBy)).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<SubcategoryEntity> subcategoryPage = subcategoryRepository.findAllByCategory_Id(categoryId,pageable);
+        List<Subcategory> subcategoryList = subcategoryEntityMapper.fromEntityToSubcategoryModelList(subcategoryPage.getContent());
+        return new ContentPage<>(
+                subcategoryPage.getTotalPages(),
+                subcategoryPage.getTotalElements(),
+                subcategoryPage.getPageable().getPageNumber(),
+                subcategoryPage.getPageable().getPageSize(),
+                subcategoryPage.isFirst(),
+                subcategoryPage.isLast(),
+                subcategoryList
+        );
+    }
+
+
+    @Override
     public boolean subcategoryExistsByUUID(UUID uuid) {
         return subcategoryRepository.existsById(uuid);
     }
