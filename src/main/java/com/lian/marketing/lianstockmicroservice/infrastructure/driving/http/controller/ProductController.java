@@ -1,6 +1,7 @@
 package com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.controller;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateProductRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.request.DiscountProductStockRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.ProductResponse;
 import com.lian.marketing.lianstockmicroservice.application.handler.ProductHandler;
 import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
@@ -8,10 +9,8 @@ import com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.cons
 import com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.exceptionhandler.ExceptionResponse;
 import com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.swagger.CreateProductMultiPartRequest;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -21,6 +20,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -85,4 +86,9 @@ public class ProductController {
         );
     }
 
+    @PostMapping("/discount")
+    public ResponseEntity<Void> discountProducts(@Valid @RequestBody List<DiscountProductStockRequest> request){
+        productHandler.discountProductsInStock(request);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class ProductAdapter implements IProductPersistencePort {
@@ -45,5 +46,25 @@ public class ProductAdapter implements IProductPersistencePort {
                 products.isLast(),
                 productList
         );
+    }
+
+    @Override
+    public boolean productExistsByUUID(UUID id) {
+        return productRepository.existsById(id);
+    }
+
+    @Override
+    public boolean isProductInStock(UUID id, Integer quantity) {
+        return productRepository.isInStock(id, quantity);
+    }
+
+    @Override
+    public boolean isPriceSellValid(UUID id, Double priceSell) {
+        return productRepository.isPriceSellValid(id, priceSell);
+    }
+
+    @Override
+    public void discountProductInStock(UUID id, Integer quantity) {
+        productRepository.updateStock(id, quantity);
     }
 }
