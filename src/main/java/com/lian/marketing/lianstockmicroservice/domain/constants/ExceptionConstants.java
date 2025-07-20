@@ -17,4 +17,8 @@ public class ExceptionConstants {
     public static final String SDK_AMAZON_EXCEPTION = "SDK AWS exception: %s";
     public static final String FILE_DOWNLOAD_FAILED = "File download failed: %s";
     public static final String AMAZON_S3_CLIENT_FAILED = "Amazon S3 Client failed: %s";
+
+    public static final String PRODUCT_NOT_FOUND = "Product not found";
+    public static final String PRODUCT_PRICE_SELL_DO_NOT_MATCH = "Product price sell do not match";
+    public static final String PRODUCT_IS_NOT_IN_STOCK = "Product is not in stock";
 }
