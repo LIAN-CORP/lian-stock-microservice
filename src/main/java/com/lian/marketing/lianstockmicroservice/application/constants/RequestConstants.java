@@ -25,4 +25,8 @@ public class RequestConstants {
     public static final String PRODUCT_PRICE_BUY_MUST_NOT_BE_NULL = "Product price buy must not be null";
     public static final String PRODUCT_PRICE_BUY_MUST_BE_POSITIVE = "Product price buy must be positive";
     public static final String SUBCATEGORY_ID_MUST_NOT_BE_NULL = "Subcategory id must not be null";
+
+    public static final String PRODUCT_ID_MUST_NOT_BE_NULL = "Product id must not be null";
+    public static final String PRODUCT_QUANTITY_IS_NOT_VALID = "Product quantity is not valid";
+    public static final String PRODUCT_PRICE_SELL_IS_NOT_VALID = "Product price sell is not valid";
 }
