@@ -5,7 +5,6 @@ import com.lian.marketing.lianstockmicroservice.domain.api.IS3ServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.api.ISubcategoryServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.constants.ExceptionConstants;
 import com.lian.marketing.lianstockmicroservice.domain.exception.ProductIsNotInStockException;
-import com.lian.marketing.lianstockmicroservice.domain.exception.ProductPriceSellDoNotMatchException;
 import com.lian.marketing.lianstockmicroservice.domain.exception.ProductsNotFoundException;
 import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
 import com.lian.marketing.lianstockmicroservice.domain.model.Product;
@@ -49,9 +48,6 @@ public class ProductUseCase implements IProductServicePort {
         products.forEach(product -> {
             if(!productPersistencePort.productExistsByUUID(product.getId())){
                 throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
-            }
-            if(!productPersistencePort.isPriceSellValid(product.getId(), product.getPriceSell())){
-                throw new ProductPriceSellDoNotMatchException(ExceptionConstants.PRODUCT_PRICE_SELL_DO_NOT_MATCH);
             }
             if(!productPersistencePort.isProductInStock(product.getId(), product.getStock())){
                 throw new ProductIsNotInStockException(ExceptionConstants.PRODUCT_IS_NOT_IN_STOCK);

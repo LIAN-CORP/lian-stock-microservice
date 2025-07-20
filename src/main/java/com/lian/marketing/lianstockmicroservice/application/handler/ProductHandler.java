@@ -1,6 +1,7 @@
 package com.lian.marketing.lianstockmicroservice.application.handler;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateProductRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.request.DiscountProductStockRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.ProductResponse;
 import com.lian.marketing.lianstockmicroservice.application.mapper.IProductMapper;
 import com.lian.marketing.lianstockmicroservice.domain.api.IProductServicePort;
@@ -8,12 +9,14 @@ import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
 import com.lian.marketing.lianstockmicroservice.domain.model.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProductHandler {
 
     private final IProductMapper productMapper;
@@ -35,6 +38,10 @@ public class ProductHandler {
                 contentPage.isLast(),
                 productResponseList
         );
+    }
+
+    public void discountProductsInStock(List<DiscountProductStockRequest> request) {
+        productServicePort.discountProductsInStock(productMapper.toModelListFromDiscountListRequest(request));
     }
 
 }
