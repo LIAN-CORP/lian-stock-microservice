@@ -23,8 +23,9 @@ public class SubcategoryAdapter implements ISubcategoryPersistencePort {
     private final ISubcategoryEntityMapper subcategoryEntityMapper;
 
     @Override
-    public void saveSubcategory(Subcategory subcategory) {
-        subcategoryRepository.save(subcategoryEntityMapper.fromModelToSubcategoryEntity(subcategory));
+    public Subcategory saveSubcategory(Subcategory subcategory) {
+        SubcategoryEntity subcategoryEntity = subcategoryRepository.save(subcategoryEntityMapper.fromModelToSubcategoryEntity(subcategory));
+        return subcategoryEntityMapper.fromEntityToSubcategoryModel(subcategoryEntity);
     }
 
     @Override

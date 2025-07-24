@@ -6,7 +6,7 @@ import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
 import java.util.UUID;
 
 public interface ICategoryPersistencePort {
-    void saveCategory(Category category);
+    Category saveCategory(Category category);
     boolean isCategoryExistsByName(String name);
     ContentPage<Category> findAllCategories(int page, int size, boolean isAsc);
     boolean categoryExistsByUUID(UUID uuid);

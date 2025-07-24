@@ -10,7 +10,8 @@ public record ProductResponse(
         Double priceSell,
         Double priceBuy,
         String subcategory,
-        String category
+        String category,
+        String imagePath
         //SubcategoryItem subcategory
 ) {
 }

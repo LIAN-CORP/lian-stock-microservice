@@ -22,8 +22,9 @@ public class CategoryAdapter implements ICategoryPersistencePort {
     private final ICategoryRepository categoryRepository;
 
     @Override
-    public void saveCategory(Category category) {
-        categoryRepository.save(categoryEntityMapper.fromModelToCategoryEntity(category));
+    public Category saveCategory(Category category) {
+        CategoryEntity categoryEntity = categoryRepository.save(categoryEntityMapper.fromModelToCategoryEntity(category));
+        return categoryEntityMapper.fromEntityToCategoryModel(categoryEntity);
     }
 
     @Override

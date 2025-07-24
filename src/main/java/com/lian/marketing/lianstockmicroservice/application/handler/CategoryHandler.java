@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,8 +18,9 @@ public class CategoryHandler {
     private final ICategoryServicePort categoryServicePort;
     private final ICategoryMapper categoryMapper;
 
-    public void saveCategory(CreateCategoryRequest request) {
-        categoryServicePort.createCategory(categoryMapper.fromRequestToDtoCategory(request));
+    public CategoryResponse saveCategory(CreateCategoryRequest request) {
+        Category categoryItem = categoryServicePort.createCategory(categoryMapper.fromRequestToDtoCategory(request));
+        return categoryMapper.fromModelToCategoryResponse(categoryItem);
     }
 
     public ContentPage<CategoryResponse> findAllCategories(int page, int size, boolean isAsc) {

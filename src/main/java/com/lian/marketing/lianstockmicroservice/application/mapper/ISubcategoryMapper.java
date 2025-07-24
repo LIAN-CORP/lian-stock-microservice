@@ -16,6 +16,7 @@ public interface ISubcategoryMapper {
     @Mapping(target = "category.id", source = "categoryId")
     Subcategory toModelFromRequest(CreateSubcategoryRequest request);
     SubcategoryResponse fromModelToResponse(Subcategory subcategory);
+    SubcategoryItemResponse fromModelToItemResponse(Subcategory subcategory);
     List<SubcategoryResponse> toResponseModelListFromModelList(List<Subcategory> subcategories);
     List<SubcategoryItemResponse> toItemResponseModelListFromModelList(List<Subcategory> subcategories);
 }
