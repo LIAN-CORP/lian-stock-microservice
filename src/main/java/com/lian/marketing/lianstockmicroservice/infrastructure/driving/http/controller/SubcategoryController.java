@@ -39,9 +39,10 @@ public class SubcategoryController {
 
     })
     @PostMapping
-    public ResponseEntity<Void> createSubcategory(@Valid @RequestBody CreateSubcategoryRequest request){
-        subcategoryHandler.createSubcategory(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<SubcategoryItemResponse> createSubcategory(@Valid @RequestBody CreateSubcategoryRequest request){
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                subcategoryHandler.createSubcategory(request)
+        );
     }
 
     @Operation(summary = OpenApiConstants.SUBCATEGORY_GET_ALL_SUMMARY)

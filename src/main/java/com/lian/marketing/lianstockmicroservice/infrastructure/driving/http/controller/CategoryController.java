@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/category")
 @RequiredArgsConstructor
@@ -36,9 +38,10 @@ public class CategoryController {
             )})
     })
     @PostMapping
-    public ResponseEntity<Void> createCategory(@Valid @RequestBody CreateCategoryRequest request){
-        categoryHandler.saveCategory(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<CategoryResponse> createCategory(@Valid @RequestBody CreateCategoryRequest request){
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                categoryHandler.saveCategory(request)
+        );
     }
 
     @Operation(summary = OpenApiConstants.CATEGORIES_GET_ALL_SUMMARY)

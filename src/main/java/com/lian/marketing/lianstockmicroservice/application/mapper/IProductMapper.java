@@ -14,6 +14,8 @@ public interface IProductMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "subcategory.id", source = "subcategoryId")
     Product toModel(CreateProductRequest request);
+    @Mapping(target = "subcategory", source = "subcategory.name")
+    @Mapping(target = "category", source = "subcategory.category.name")
     ProductResponse toResponse(Product product);
     List<ProductResponse> toResponseList(List<Product> products);
 

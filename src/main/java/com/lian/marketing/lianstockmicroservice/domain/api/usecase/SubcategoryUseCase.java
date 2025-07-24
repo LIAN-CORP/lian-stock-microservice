@@ -21,14 +21,14 @@ public class SubcategoryUseCase implements ISubcategoryServicePort {
     private final ICategoryServicePort categoryServicePort;
 
     @Override
-    public void createSubcategory(Subcategory subcategory) {
+    public Subcategory createSubcategory(Subcategory subcategory) {
         if(subcategoryPersistencePort.isSubcategoryExist(subcategory.getName())) {
             throw new SubcategoryAlreadyExistsException(String.format(ExceptionConstants.SUBCATEGORY_ALREADY_EXISTS_WITH_NAME, subcategory.getName()));
         }
         if (!categoryServicePort.categoryExistsByUUID(subcategory.getCategory().getId())) {
             throw new CategoryWithIdNotExists(String.format(ExceptionConstants.CATEGORY_WITH_ID_NOT_EXISTS, subcategory.getCategory().getId()));
         }
-        subcategoryPersistencePort.saveSubcategory(subcategory);
+        return subcategoryPersistencePort.saveSubcategory(subcategory);
     }
 
     @Override

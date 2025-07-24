@@ -19,12 +19,12 @@ public class CategoryUseCase implements ICategoryServicePort {
     }
 
     @Override
-    public void createCategory(Category category) {
+    public Category createCategory(Category category) {
         if(categoryPersistencePort.isCategoryExistsByName(category.getName())) {
             throw new CategoryAlreadyExistsException(
                     String.format(ExceptionConstants.CATEGORY_ALREADY_EXISTS_WITH_NAME, category.getName()));
         }
-        categoryPersistencePort.saveCategory(category);
+        return categoryPersistencePort.saveCategory(category);
     }
 
     @Override

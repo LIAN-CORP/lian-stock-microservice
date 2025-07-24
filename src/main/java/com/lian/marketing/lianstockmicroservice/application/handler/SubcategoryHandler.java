@@ -20,8 +20,9 @@ public class SubcategoryHandler {
     private final ISubcategoryMapper subcategoryMapper;
     private final ISubcategoryServicePort subcategoryServicePort;
 
-    public void createSubcategory(CreateSubcategoryRequest request) {
-        subcategoryServicePort.createSubcategory(subcategoryMapper.toModelFromRequest(request));
+    public SubcategoryItemResponse createSubcategory(CreateSubcategoryRequest request) {
+        Subcategory subcategoryItem = subcategoryServicePort.createSubcategory(subcategoryMapper.toModelFromRequest(request));
+        return subcategoryMapper.fromModelToItemResponse(subcategoryItem);
     }
 
     public ContentPage<SubcategoryResponse> findAllSubcategories(int page, int size, boolean isAsc, String sortBy) {

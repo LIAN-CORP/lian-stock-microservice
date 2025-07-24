@@ -6,7 +6,7 @@ import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
 import java.util.UUID;
 
 public interface ICategoryServicePort {
-    void createCategory(Category category);
+    Category createCategory(Category category);
     ContentPage<Category> findAllCategories(int page, int size, boolean isAsc);
     boolean categoryExistsByUUID(UUID uuid);
 }
