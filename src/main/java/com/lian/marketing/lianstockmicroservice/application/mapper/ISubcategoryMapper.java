@@ -1,6 +1,7 @@
 package com.lian.marketing.lianstockmicroservice.application.mapper;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateSubcategoryRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.request.UpdateSubcategoryRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryFullResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryItemResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryResponse;
@@ -21,4 +22,7 @@ public interface ISubcategoryMapper {
     List<SubcategoryResponse> toResponseModelListFromModelList(List<Subcategory> subcategories);
     List<SubcategoryItemResponse> toItemResponseModelListFromModelList(List<Subcategory> subcategories);
     SubcategoryFullResponse fromModelToFullResponse(Subcategory subcategory);
+
+    @Mapping(target = "category.id", source = "categoryId")
+    Subcategory toModelFromUpdateRequest(UpdateSubcategoryRequest subcategory);
 }

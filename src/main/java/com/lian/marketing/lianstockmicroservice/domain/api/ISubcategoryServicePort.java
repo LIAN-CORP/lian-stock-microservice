@@ -11,4 +11,5 @@ public interface ISubcategoryServicePort {
     ContentPage<Subcategory> findAllSubcategoriesByCategory(int page, int size, boolean isAsc, String sortBy, UUID categoryId);
     void subcategoryExistsByUUID(UUID uuid);
     Subcategory findSubcategoryById(UUID id);
+    void updateSubcategory(Subcategory subcategory);
 }

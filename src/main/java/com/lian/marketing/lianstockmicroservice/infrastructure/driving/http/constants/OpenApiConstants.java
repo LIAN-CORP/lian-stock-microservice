@@ -45,4 +45,8 @@ public class OpenApiConstants {
     public static final String SUBCATEGORY_DESCRIPTION_404 = "Subcategory records not found";
     public static final String SUBCATEGORY_GET_ALL_SUMMARY = "Get all subcategories paged by page, size and is ascending params";
     public static final String SUBCATEGORY_GET_ALL_DESCRIPTION_200 = "Found subcategories records";
+    public static final String SUBCATEGORY_GET_BY_ID_SUMMARY = "Get subcategory by id";
+    public static final String SUBCATEGORY_PUT_SUMMARY = "Update subcategory by id";
+    public static final String SUBCATEGORY_DELETE_SUMMARY = "Delete subcategory by id";
+    public static final String SUBCATEGORY_DELETE_DESCRIPTION_204 = "Subcategory deleted";
 }

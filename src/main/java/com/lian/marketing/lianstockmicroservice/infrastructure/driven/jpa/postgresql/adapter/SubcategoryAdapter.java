@@ -82,4 +82,9 @@ public class SubcategoryAdapter implements ISubcategoryPersistencePort {
     public Optional<Subcategory> findSubcategoryById(UUID id) {
         return subcategoryRepository.findById(id).map(subcategoryEntityMapper::fromEntityToSubcategoryModel);
     }
+
+    @Override
+    public void updateSubcategory(Subcategory subcategory) {
+        subcategoryRepository.save(subcategoryEntityMapper.fromModelToSubcategoryEntity(subcategory));
+    }
 }
