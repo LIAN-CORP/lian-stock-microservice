@@ -63,4 +63,8 @@ public class SubcategoryHandler {
         subcategoryServicePort.updateSubcategory(subcategoryMapper.toModelFromUpdateRequest(request));
     }
 
+    public void deleteSubcategoryById(UUID id) {
+        subcategoryServicePort.deleteSubcategoryById(id);
+    }
+
 }

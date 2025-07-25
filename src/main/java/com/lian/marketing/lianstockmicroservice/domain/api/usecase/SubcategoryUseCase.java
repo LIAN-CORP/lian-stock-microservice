@@ -77,4 +77,12 @@ public class SubcategoryUseCase implements ISubcategoryServicePort {
         subcategory.setCategory(categoryServicePort.findCategoryById(subcategory.getCategory().getId()));
         subcategoryPersistencePort.updateSubcategory(subcategory);
     }
+
+    @Override
+    public void deleteSubcategoryById(UUID id) {
+        if(!subcategoryPersistencePort.subcategoryExistsByUUID(id)) {
+            throw new SubcategoryNotFoundException(String.format(ExceptionConstants.SUBCATEGORY_WITH_ID_NOT_EXISTS, id));
+        }
+        subcategoryPersistencePort.deleteSubcategoryById(id);
+    }
 }

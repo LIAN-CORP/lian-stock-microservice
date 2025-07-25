@@ -87,4 +87,9 @@ public class SubcategoryAdapter implements ISubcategoryPersistencePort {
     public void updateSubcategory(Subcategory subcategory) {
         subcategoryRepository.save(subcategoryEntityMapper.fromModelToSubcategoryEntity(subcategory));
     }
+
+    @Override
+    public void deleteSubcategoryById(UUID id) {
+        subcategoryRepository.deleteById(id);
+    }
 }

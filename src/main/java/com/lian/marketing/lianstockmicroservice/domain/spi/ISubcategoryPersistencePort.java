@@ -14,4 +14,5 @@ public interface ISubcategoryPersistencePort {
     boolean subcategoryExistsByUUID(UUID uuid);
     Optional<Subcategory> findSubcategoryById(UUID id);
     void updateSubcategory(Subcategory subcategory);
+    void deleteSubcategoryById(UUID id);
 }

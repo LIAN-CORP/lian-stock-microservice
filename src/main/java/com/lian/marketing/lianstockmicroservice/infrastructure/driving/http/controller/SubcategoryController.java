@@ -118,4 +118,19 @@ public class SubcategoryController {
         subcategoryHandler.updateCategory(request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @Operation(summary = OpenApiConstants.SUBCATEGORY_DELETE_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.SUBCATEGORY_DELETE_DESCRIPTION_204),
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.SUBCATEGORY_DESCRIPTION_404,
+                    content = {
+                            @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = ExceptionResponse.class))
+                    }
+            )
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSubcategory(@PathVariable("id") UUID id) {
+        subcategoryHandler.deleteSubcategoryById(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

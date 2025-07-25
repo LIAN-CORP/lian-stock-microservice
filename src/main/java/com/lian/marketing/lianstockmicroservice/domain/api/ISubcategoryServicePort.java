@@ -12,4 +12,5 @@ public interface ISubcategoryServicePort {
     void subcategoryExistsByUUID(UUID uuid);
     Subcategory findSubcategoryById(UUID id);
     void updateSubcategory(Subcategory subcategory);
+    void deleteSubcategoryById(UUID id);
 }
