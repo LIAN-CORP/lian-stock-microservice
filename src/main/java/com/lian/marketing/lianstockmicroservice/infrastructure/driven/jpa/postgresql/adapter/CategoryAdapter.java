@@ -64,4 +64,9 @@ public class CategoryAdapter implements ICategoryPersistencePort {
     public void updateCategory(Category category) {
         categoryRepository.save(categoryEntityMapper.fromModelToCategoryEntity(category));
     }
+
+    @Override
+    public void deleteCategoryById(UUID id) {
+        categoryRepository.deleteById(id);
+    }
 }

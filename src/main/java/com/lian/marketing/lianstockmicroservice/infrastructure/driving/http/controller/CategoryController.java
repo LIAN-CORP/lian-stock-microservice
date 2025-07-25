@@ -102,4 +102,21 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = OpenApiConstants.CATEGORY_DELETE_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.CATEGORY_DELETE_DESCRIPTION_204,
+            content = {
+                    @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON)
+            }),
+            @ApiResponse(responseCode = OpenApiConstants.BAD_REQUEST_STATUS_CODE, description = OpenApiConstants.CATEGORY_DESCRIPTION_404,
+            content = {
+                    @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = ExceptionResponse.class))
+            })
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable("id") UUID id) {
+        categoryHandler.deleteCategoryById(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }

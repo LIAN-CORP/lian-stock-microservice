@@ -46,4 +46,8 @@ public class CategoryHandler {
     public void updateCategory(UpdateCategoryRequest request) {
         categoryServicePort.updateCategory(categoryMapper.toModelFromUpdateRequest(request));
     }
+
+    public void deleteCategoryById(UUID id) {
+        categoryServicePort.deleteCategoryById(id);
+    }
 }

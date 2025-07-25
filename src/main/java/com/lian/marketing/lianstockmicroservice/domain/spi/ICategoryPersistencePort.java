@@ -13,4 +13,5 @@ public interface ICategoryPersistencePort {
     boolean categoryExistsByUUID(UUID uuid);
     Optional<Category> findCategoryById(UUID id);
     void updateCategory(Category category);
+    void deleteCategoryById(UUID id);
 }

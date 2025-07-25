@@ -11,4 +11,5 @@ public interface ICategoryServicePort {
     boolean categoryExistsByUUID(UUID uuid);
     Category findCategoryById(UUID id);
     void updateCategory(Category category);
+    void deleteCategoryById(UUID id);
 }

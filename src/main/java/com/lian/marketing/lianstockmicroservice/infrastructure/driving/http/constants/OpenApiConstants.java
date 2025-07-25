@@ -20,6 +20,8 @@ public class OpenApiConstants {
     public static final String CATEGORY_GET_BY_ID_SUMMARY = "Get category by id";
     public static final String CATEGORY_DESCRIPTION_200 = "Category saved or updated";
     public static final String CATEGORY_PUT_SUMMARY = "Update category by id";
+    public static final String CATEGORY_DELETE_SUMMARY = "Delete category by id";
+    public static final String CATEGORY_DELETE_DESCRIPTION_204 = "Category deleted";
 
     //Propduct
     public static final String PRODUCT_POST_SUMMARY = "Save new product category";

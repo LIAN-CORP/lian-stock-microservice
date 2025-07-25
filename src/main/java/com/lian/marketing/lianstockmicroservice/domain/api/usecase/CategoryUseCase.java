@@ -59,4 +59,12 @@ public class CategoryUseCase implements ICategoryServicePort {
         categoryPersistencePort.updateCategory(category);
     }
 
+    @Override
+    public void deleteCategoryById(UUID id) {
+        if(!categoryPersistencePort.categoryExistsByUUID(id)){
+            throw new CategoriesNotFoundException(ExceptionConstants.CATEGORY_WITH_ID_NOT_EXISTS);
+        }
+        categoryPersistencePort.deleteCategoryById(id);
+    }
+
 }
