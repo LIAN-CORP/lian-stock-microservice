@@ -1,6 +1,7 @@
 package com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.controller;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateSubcategoryRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryFullResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryItemResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryResponse;
 import com.lian.marketing.lianstockmicroservice.application.handler.SubcategoryHandler;
@@ -82,4 +83,10 @@ public class SubcategoryController {
         );
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<SubcategoryFullResponse> getSubcategory(@PathVariable("id") UUID id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                subcategoryHandler.findSubcategoryById(id)
+        );
+    }
 }
