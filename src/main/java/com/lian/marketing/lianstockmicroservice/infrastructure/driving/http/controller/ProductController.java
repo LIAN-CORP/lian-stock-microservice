@@ -129,4 +129,19 @@ public class ProductController {
         productHandler.updateProduct(request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @Operation(summary = OpenApiConstants.PRODUCT_DELETE_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.PRODUCT_DELETE_DESCRIPTION_204),
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.PRODUCT_DESCRIPTION_404,
+                    content = {
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ExceptionResponse.class))
+                    }
+            )
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable("id") UUID id) {
+        productHandler.deleteProductById(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

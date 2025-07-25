@@ -77,4 +77,9 @@ public class ProductAdapter implements IProductPersistencePort {
     public void updateProduct(Product product) {
         productRepository.save(productEntityMapper.toEntity(product));
     }
+
+    @Override
+    public void deleteProductById(UUID id) {
+        productRepository.deleteById(id);
+    }
 }

@@ -55,4 +55,8 @@ public class ProductHandler {
         productServicePort.updateProduct(productMapper.toModelFromUpdateRequest(request));
     }
 
+    public void deleteProductById(UUID id) {
+        productServicePort.deleteProductById(id);
+    }
+
 }

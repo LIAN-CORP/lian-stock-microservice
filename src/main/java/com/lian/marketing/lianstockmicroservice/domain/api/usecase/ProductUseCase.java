@@ -81,6 +81,14 @@ public class ProductUseCase implements IProductServicePort {
         productPersistencePort.updateProduct(product);
     }
 
+    @Override
+    public void deleteProductById(UUID id) {
+        if(!productPersistencePort.productExistsByUUID(id)){
+            throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
+        }
+        productPersistencePort.deleteProductById(id);
+    }
+
     private List<Product> mergeItemsProductsWithSimilarId(List<Product> products){
         return new ArrayList<>(products.stream().collect(Collectors.toMap(
                 Product::getId,

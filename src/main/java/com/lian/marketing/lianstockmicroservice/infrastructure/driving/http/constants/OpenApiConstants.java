@@ -33,6 +33,8 @@ public class OpenApiConstants {
     public static final String PRODUCT_GET_ALL_DESCRIPTION_200 = "Found product records";
     public static final String PRODUCT_GET_BY_ID_SUMMARY = "Get product by id";
     public static final String PRODUCT_PUT_SUMMARY = "Update product by id";
+    public static final String PRODUCT_DELETE_SUMMARY = "Delete product by id";
+    public static final String PRODUCT_DELETE_DESCRIPTION_204 = "Product deleted";
 
     //Paged
     public static final String DEFAULT_PAGE = "0";
