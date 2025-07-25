@@ -66,4 +66,11 @@ public class CategoryController {
         );
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryResponse> getCategory(@PathVariable("id") UUID id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                categoryHandler.findCategoryById(id)
+        );
+    }
+
 }

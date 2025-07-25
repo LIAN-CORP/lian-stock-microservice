@@ -36,4 +36,9 @@ public class CategoryHandler {
                 categoryResponseList
         );
     }
+
+    public CategoryResponse findCategoryById(UUID id) {
+        Category category = categoryServicePort.findCategoryById(id);
+        return categoryMapper.fromModelToCategoryResponse(category);
+    }
 }
