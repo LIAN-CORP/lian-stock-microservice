@@ -2,6 +2,7 @@ package com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.con
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateProductRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.request.DiscountProductStockRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.response.ProductFullResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.ProductResponse;
 import com.lian.marketing.lianstockmicroservice.application.handler.ProductHandler;
 import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/product")
@@ -90,5 +92,12 @@ public class ProductController {
     public ResponseEntity<Void> discountProducts(@Valid @RequestBody List<DiscountProductStockRequest> request){
         productHandler.discountProductsInStock(request);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductFullResponse> getProductById(@PathVariable("id") UUID id) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                productHandler.findProductById(id)
+        );
     }
 }

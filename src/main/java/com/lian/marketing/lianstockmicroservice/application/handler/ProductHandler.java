@@ -2,6 +2,7 @@ package com.lian.marketing.lianstockmicroservice.application.handler;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateProductRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.request.DiscountProductStockRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.response.ProductFullResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.ProductResponse;
 import com.lian.marketing.lianstockmicroservice.application.mapper.IProductMapper;
 import com.lian.marketing.lianstockmicroservice.domain.api.IProductServicePort;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +44,10 @@ public class ProductHandler {
 
     public void discountProductsInStock(List<DiscountProductStockRequest> request) {
         productServicePort.discountProductsInStock(productMapper.toModelListFromDiscountListRequest(request));
+    }
+
+    public ProductFullResponse findProductById(UUID id) {
+        return productMapper.toFullResponse(productServicePort.getProductById(id));
     }
 
 }

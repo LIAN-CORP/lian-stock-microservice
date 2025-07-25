@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -54,6 +56,15 @@ public class ProductUseCase implements IProductServicePort {
             }
         });
         products.forEach(product -> productPersistencePort.discountProductInStock(product.getId(), product.getStock()));
+    }
+
+    @Override
+    public Product getProductById(UUID id) {
+        Optional<Product> product = productPersistencePort.findProductById(id);
+        if(product.isEmpty()) {
+            throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
+        }
+        return product.get();
     }
 
     private List<Product> mergeItemsProductsWithSimilarId(List<Product> products){

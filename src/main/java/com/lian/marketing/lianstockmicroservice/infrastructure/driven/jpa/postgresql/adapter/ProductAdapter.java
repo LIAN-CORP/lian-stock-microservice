@@ -12,9 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -66,5 +66,10 @@ public class ProductAdapter implements IProductPersistencePort {
     @Override
     public void discountProductInStock(UUID id, Integer quantity) {
         productRepository.updateStock(id, quantity);
+    }
+
+    @Override
+    public Optional<Product> findProductById(UUID id) {
+        return productRepository.findById(id).map(productEntityMapper::toProduct);
     }
 }
