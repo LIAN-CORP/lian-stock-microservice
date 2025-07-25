@@ -2,6 +2,7 @@ package com.lian.marketing.lianstockmicroservice.application.handler;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateProductRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.request.DiscountProductStockRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.request.UpdateProductRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.ProductFullResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.ProductResponse;
 import com.lian.marketing.lianstockmicroservice.application.mapper.IProductMapper;
@@ -48,6 +49,10 @@ public class ProductHandler {
 
     public ProductFullResponse findProductById(UUID id) {
         return productMapper.toFullResponse(productServicePort.getProductById(id));
+    }
+
+    public void updateProduct(UpdateProductRequest request) {
+        productServicePort.updateProduct(productMapper.toModelFromUpdateRequest(request));
     }
 
 }

@@ -31,6 +31,8 @@ public class OpenApiConstants {
     public static final String PRODUCT_IMAGE_OPTIONAL = "Image product is optional";
     public static final String PRODUCT_GET_ALL_SUMMARY = "Get all products paged by page, size and is ascending params";
     public static final String PRODUCT_GET_ALL_DESCRIPTION_200 = "Found product records";
+    public static final String PRODUCT_GET_BY_ID_SUMMARY = "Get product by id";
+    public static final String PRODUCT_PUT_SUMMARY = "Update product by id";
 
     //Paged
     public static final String DEFAULT_PAGE = "0";

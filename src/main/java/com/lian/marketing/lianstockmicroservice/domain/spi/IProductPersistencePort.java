@@ -14,4 +14,5 @@ public interface IProductPersistencePort {
     boolean isPriceSellValid(UUID id, Double priceSell);
     void discountProductInStock(UUID id, Integer quantity);
     Optional<Product> findProductById(UUID id);
+    void updateProduct(Product product);
 }

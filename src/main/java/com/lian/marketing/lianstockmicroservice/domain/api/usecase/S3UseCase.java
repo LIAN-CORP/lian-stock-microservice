@@ -32,4 +32,5 @@ public class S3UseCase implements IS3ServicePort {
             throw new FileUploadException(String.format(ExceptionConstants.FILE_UPLOAD_FAILED, e.getMessage()));
         }
     }
+
 }

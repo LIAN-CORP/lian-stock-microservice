@@ -12,4 +12,5 @@ public interface IProductServicePort {
     ContentPage<Product> findAllProducts(int page, int size, boolean isAsc, String sortBy);
     void discountProductsInStock(List<Product> product);
     Product getProductById(UUID id);
+    void updateProduct(Product product);
 }

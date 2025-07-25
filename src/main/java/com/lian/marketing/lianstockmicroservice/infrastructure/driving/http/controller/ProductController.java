@@ -2,6 +2,7 @@ package com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.con
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateProductRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.request.DiscountProductStockRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.request.UpdateProductRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.ProductFullResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.ProductResponse;
 import com.lian.marketing.lianstockmicroservice.application.handler.ProductHandler;
@@ -94,10 +95,38 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = OpenApiConstants.PRODUCT_GET_BY_ID_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.PRODUCT_GET_ALL_DESCRIPTION_200,
+                    content = {
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ProductFullResponse.class))
+                    }
+            ),
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.PRODUCT_DESCRIPTION_404,
+                    content = {
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ExceptionResponse.class))
+                    }
+            )
+    })
     @GetMapping("/{id}")
     public ResponseEntity<ProductFullResponse> getProductById(@PathVariable("id") UUID id) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 productHandler.findProductById(id)
         );
+    }
+
+    @Operation(summary = OpenApiConstants.PRODUCT_PUT_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.PRODUCT_GET_ALL_DESCRIPTION_200),
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.PRODUCT_DESCRIPTION_404,
+                    content = {
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ExceptionResponse.class))
+                    }
+            )
+    })
+    @PutMapping
+    public ResponseEntity<Void> putProduct(@Valid @RequestBody UpdateProductRequest request) {
+        productHandler.updateProduct(request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

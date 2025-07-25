@@ -72,4 +72,9 @@ public class ProductAdapter implements IProductPersistencePort {
     public Optional<Product> findProductById(UUID id) {
         return productRepository.findById(id).map(productEntityMapper::toProduct);
     }
+
+    @Override
+    public void updateProduct(Product product) {
+        productRepository.save(productEntityMapper.toEntity(product));
+    }
 }

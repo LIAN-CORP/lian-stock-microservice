@@ -67,6 +67,20 @@ public class ProductUseCase implements IProductServicePort {
         return product.get();
     }
 
+    @Override
+    public void updateProduct(Product product) {
+        if(!productPersistencePort.productExistsByUUID(product.getId())){
+            throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
+        }
+        product.setSubcategory(subcategoryServicePort.findSubcategoryById(product.getSubcategory().getId()));
+        Optional<Product> p = productPersistencePort.findProductById(product.getId());
+        if(p.isEmpty()) {
+            throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
+        }
+        product.setImagePath(p.get().getImagePath());
+        productPersistencePort.updateProduct(product);
+    }
+
     private List<Product> mergeItemsProductsWithSimilarId(List<Product> products){
         return new ArrayList<>(products.stream().collect(Collectors.toMap(
                 Product::getId,

@@ -2,6 +2,7 @@ package com.lian.marketing.lianstockmicroservice.application.mapper;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateProductRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.request.DiscountProductStockRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.request.UpdateProductRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.ProductFullResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.ProductResponse;
 import com.lian.marketing.lianstockmicroservice.domain.model.Product;
@@ -34,4 +35,7 @@ public interface IProductMapper {
     @Mapping(target = "subcategoryId", source = "subcategory.id")
     @Mapping(target = "categoryId", source = "subcategory.category.id")
     ProductFullResponse toFullResponse(Product product);
+
+    @Mapping(target = "subcategory.id", source = "subcategoryId")
+    Product toModelFromUpdateRequest(UpdateProductRequest product);
 }
