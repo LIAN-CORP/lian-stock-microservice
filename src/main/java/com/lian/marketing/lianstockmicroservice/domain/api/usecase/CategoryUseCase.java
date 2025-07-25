@@ -51,4 +51,12 @@ public class CategoryUseCase implements ICategoryServicePort {
         return category.get();
     }
 
+    @Override
+    public void updateCategory(Category category) {
+        if(!categoryPersistencePort.categoryExistsByUUID(category.getId())){
+            throw new CategoriesNotFoundException(ExceptionConstants.CATEGORY_WITH_ID_NOT_EXISTS);
+        }
+        categoryPersistencePort.updateCategory(category);
+    }
+
 }

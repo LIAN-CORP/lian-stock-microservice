@@ -59,4 +59,9 @@ public class CategoryAdapter implements ICategoryPersistencePort {
     public Optional<Category> findCategoryById(UUID id) {
         return categoryRepository.findById(id).map(categoryEntityMapper::fromEntityToCategoryModel);
     }
+
+    @Override
+    public void updateCategory(Category category) {
+        categoryRepository.save(categoryEntityMapper.fromModelToCategoryEntity(category));
+    }
 }

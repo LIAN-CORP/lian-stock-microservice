@@ -1,6 +1,7 @@
 package com.lian.marketing.lianstockmicroservice.application.handler;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateCategoryRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.request.UpdateCategoryRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.CategoryResponse;
 import com.lian.marketing.lianstockmicroservice.application.mapper.ICategoryMapper;
 import com.lian.marketing.lianstockmicroservice.domain.api.ICategoryServicePort;
@@ -40,5 +41,9 @@ public class CategoryHandler {
     public CategoryResponse findCategoryById(UUID id) {
         Category category = categoryServicePort.findCategoryById(id);
         return categoryMapper.fromModelToCategoryResponse(category);
+    }
+
+    public void updateCategory(UpdateCategoryRequest request) {
+        categoryServicePort.updateCategory(categoryMapper.toModelFromUpdateRequest(request));
     }
 }

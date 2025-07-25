@@ -10,4 +10,5 @@ public interface ICategoryServicePort {
     ContentPage<Category> findAllCategories(int page, int size, boolean isAsc);
     boolean categoryExistsByUUID(UUID uuid);
     Category findCategoryById(UUID id);
+    void updateCategory(Category category);
 }

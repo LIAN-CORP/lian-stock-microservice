@@ -17,6 +17,9 @@ public class OpenApiConstants {
     public static final String CATEGORY_DESCRIPTION_404 = "Category or categories records not found";
     public static final String CATEGORIES_GET_ALL_SUMMARY = "Get all categories paged by page, size and is ascending params";
     public static final String CATEGORIES_GET_ALL_DESCRIPTION_201 = "Found categories records";
+    public static final String CATEGORY_GET_BY_ID_SUMMARY = "Get category by id";
+    public static final String CATEGORY_DESCRIPTION_200 = "Category saved or updated";
+    public static final String CATEGORY_PUT_SUMMARY = "Update category by id";
 
     //Propduct
     public static final String PRODUCT_POST_SUMMARY = "Save new product category";

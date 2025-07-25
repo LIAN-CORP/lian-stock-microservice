@@ -12,4 +12,5 @@ public interface ICategoryPersistencePort {
     ContentPage<Category> findAllCategories(int page, int size, boolean isAsc);
     boolean categoryExistsByUUID(UUID uuid);
     Optional<Category> findCategoryById(UUID id);
+    void updateCategory(Category category);
 }
