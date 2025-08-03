@@ -144,4 +144,46 @@ public class ProductController {
         productHandler.deleteProductById(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @Operation(summary = OpenApiConstants.PRODUCT_GET_PRICE_BY_ID_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.PRODUCT_GET_PRICE_BY_ID_DESCRIPTION_200,
+                content = {
+                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Double.class))
+                }
+            ),
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.PRODUCT_DESCRIPTION_404,
+                    content = {
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ExceptionResponse.class))
+                    }
+            )
+    })
+    @GetMapping("/price/{id}")
+    public ResponseEntity<Double> getPriceSellProductById(@PathVariable("id") UUID id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                productHandler.getPriceSellByProductId(id)
+        );
+    }
+
+    @Operation(summary = OpenApiConstants.PRODUCT_POST_ADD_STOCK_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.PRODUCT_POST_ADD_STOCK_DESCRIPTION_200),
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.PRODUCT_DESCRIPTION_404,
+                    content = {
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ExceptionResponse.class))
+                    }
+            )
+    })
+    @PostMapping("/stock/add")
+    public ResponseEntity<Void> postStockAddProductById(@Valid @RequestBody List<DiscountProductStockRequest> request){
+        productHandler.addProductToStock(request);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/price/buy/{id}")
+    public ResponseEntity<Double> getPriceBuyProductById(@PathVariable("id") UUID id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                productHandler.getPriceBuyByProductId(id)
+        );
+    }
 }

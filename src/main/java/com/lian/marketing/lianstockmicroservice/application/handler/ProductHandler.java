@@ -59,4 +59,15 @@ public class ProductHandler {
         productServicePort.deleteProductById(id);
     }
 
+    public Double getPriceSellByProductId(UUID id) {
+        return productServicePort.getPriceSellByProductId(id);
+    }
+
+    public void addProductToStock(List<DiscountProductStockRequest> products) {
+        productServicePort.addProductToStock(productMapper.toModelListFromDiscountListRequest(products));
+    }
+
+    public Double getPriceBuyByProductId(UUID id) {
+        return productServicePort.getPriceBuyByProductId(id);
+    }
 }

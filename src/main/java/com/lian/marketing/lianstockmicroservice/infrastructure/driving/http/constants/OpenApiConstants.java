@@ -1,7 +1,8 @@
 package com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.constants;
 
 public class OpenApiConstants {
-    private OpenApiConstants() {}
+    private OpenApiConstants() {
+    }
 
     // Swagger
     public static final String CREATED_STATUS_CODE = "201";
@@ -35,6 +36,10 @@ public class OpenApiConstants {
     public static final String PRODUCT_PUT_SUMMARY = "Update product by id";
     public static final String PRODUCT_DELETE_SUMMARY = "Delete product by id";
     public static final String PRODUCT_DELETE_DESCRIPTION_204 = "Product deleted";
+    public static final String PRODUCT_GET_PRICE_BY_ID_SUMMARY = "Get product price by id";
+    public static final String PRODUCT_GET_PRICE_BY_ID_DESCRIPTION_200 = "Found product price";
+    public static final String PRODUCT_POST_ADD_STOCK_SUMMARY = "Add stock to product by id";
+    public static final String PRODUCT_POST_ADD_STOCK_DESCRIPTION_200 = "Stock added to product";
 
     //Paged
     public static final String DEFAULT_PAGE = "0";

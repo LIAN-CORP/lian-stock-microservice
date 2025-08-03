@@ -14,4 +14,7 @@ public interface IProductServicePort {
     Product getProductById(UUID id);
     void updateProduct(Product product);
     void deleteProductById(UUID id);
+    Double getPriceSellByProductId(UUID id);
+    void addProductToStock(List<Product> products);
+    Double getPriceBuyByProductId(UUID id);
 }

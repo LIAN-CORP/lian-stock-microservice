@@ -82,4 +82,9 @@ public class ProductAdapter implements IProductPersistencePort {
     public void deleteProductById(UUID id) {
         productRepository.deleteById(id);
     }
+
+    @Override
+    public void addProductToStock(UUID id, Integer quantity) {
+        productRepository.updateStockPlus(id, quantity);
+    }
 }

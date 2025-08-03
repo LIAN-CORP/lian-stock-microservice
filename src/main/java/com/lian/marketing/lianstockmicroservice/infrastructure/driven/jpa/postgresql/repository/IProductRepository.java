@@ -20,4 +20,8 @@ public interface IProductRepository extends JpaRepository<ProductEntity, UUID> {
     @Modifying
     @Query(value = "UPDATE product SET stock = stock - :quantity WHERE id = :id", nativeQuery = true)
     void updateStock(@Param("id") UUID id, @Param("quantity") Integer quantity);
+
+    @Modifying
+    @Query(value = "UPDATE product SET stock = stock + :quantity WHERE id = :id", nativeQuery = true)
+    void updateStockPlus(@Param("id") UUID id, @Param("quantity") Integer quantity);
 }

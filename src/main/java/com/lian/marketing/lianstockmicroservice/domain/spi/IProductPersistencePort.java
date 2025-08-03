@@ -16,4 +16,5 @@ public interface IProductPersistencePort {
     Optional<Product> findProductById(UUID id);
     void updateProduct(Product product);
     void deleteProductById(UUID id);
+    void addProductToStock(UUID id, Integer quantity);
 }

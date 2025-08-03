@@ -89,6 +89,31 @@ public class ProductUseCase implements IProductServicePort {
         productPersistencePort.deleteProductById(id);
     }
 
+    @Override
+    public Double getPriceSellByProductId(UUID id) {
+        return productPersistencePort.findProductById(id)
+                .orElseThrow(() -> new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND))
+                .getPriceSell();
+    }
+
+    @Override
+    public void addProductToStock(List<Product> products) {
+        products = mergeItemsProductsWithSimilarId(products);
+        products.forEach(product -> {
+            if(!productPersistencePort.productExistsByUUID(product.getId())){
+                throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
+            }
+        });
+        products.forEach(product -> productPersistencePort.addProductToStock(product.getId(), product.getStock()));
+    }
+
+    @Override
+    public Double getPriceBuyByProductId(UUID id) {
+        return productPersistencePort.findProductById(id)
+                .orElseThrow(() -> new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND))
+                .getPriceBuy();
+    }
+
     private List<Product> mergeItemsProductsWithSimilarId(List<Product> products){
         return new ArrayList<>(products.stream().collect(Collectors.toMap(
                 Product::getId,
