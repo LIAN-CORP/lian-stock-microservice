@@ -18,7 +18,8 @@ public class SubcategoryControllerAdvisor {
                 HttpStatus.BAD_REQUEST.toString(),
                 HttpStatus.BAD_REQUEST.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "SUBCATEGORY_ALREADY_EXISTS_EXCEPTION"
         ));
     }
 
@@ -28,7 +29,8 @@ public class SubcategoryControllerAdvisor {
                 HttpStatus.NOT_FOUND.toString(),
                 HttpStatus.NOT_FOUND.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "SUBCATEGORIES_NOT_FOUND_EXCEPTION"
         ));
     }
 
@@ -38,7 +40,8 @@ public class SubcategoryControllerAdvisor {
                 HttpStatus.NOT_FOUND.toString(),
                 HttpStatus.NOT_FOUND.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "SUBCATEGORY_NOT_FOUND_EXCEPTION"
         ));
     }
 }
