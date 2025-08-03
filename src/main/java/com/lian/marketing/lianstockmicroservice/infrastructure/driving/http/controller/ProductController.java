@@ -180,6 +180,19 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @Operation(summary = OpenApiConstants.PRODUCT_GET_PRICE_BUY_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.PRODUCT_GET_PRICE_BUY_DESCRIPTION_200,
+                content = {
+                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Double.class))
+                }
+            ),
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.PRODUCT_DESCRIPTION_404,
+                    content = {
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ExceptionResponse.class))
+                    }
+            )
+    })
     @GetMapping("/price/buy/{id}")
     public ResponseEntity<Double> getPriceBuyProductById(@PathVariable("id") UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(

@@ -24,7 +24,7 @@ public class OpenApiConstants {
     public static final String CATEGORY_DELETE_SUMMARY = "Delete category by id";
     public static final String CATEGORY_DELETE_DESCRIPTION_204 = "Category deleted";
 
-    //Propduct
+    //Product
     public static final String PRODUCT_POST_SUMMARY = "Save new product category";
     public static final String PRODUCT_DESCRIPTION_201 = "Product saved";
     public static final String PRODUCT_DESCRIPTION_400 = "Invalid product";
@@ -40,6 +40,8 @@ public class OpenApiConstants {
     public static final String PRODUCT_GET_PRICE_BY_ID_DESCRIPTION_200 = "Found product price";
     public static final String PRODUCT_POST_ADD_STOCK_SUMMARY = "Add stock to product by id";
     public static final String PRODUCT_POST_ADD_STOCK_DESCRIPTION_200 = "Stock added to product";
+    public static final String PRODUCT_GET_PRICE_BUY_SUMMARY = "Get product price buy by id";
+    public static final String PRODUCT_GET_PRICE_BUY_DESCRIPTION_200 = "Found product price buy";
 
     //Paged
     public static final String DEFAULT_PAGE = "0";
