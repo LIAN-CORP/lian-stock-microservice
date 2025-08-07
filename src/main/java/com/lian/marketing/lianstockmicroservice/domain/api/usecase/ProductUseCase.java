@@ -83,9 +83,11 @@ public class ProductUseCase implements IProductServicePort {
 
     @Override
     public void deleteProductById(UUID id) {
-        if(!productPersistencePort.productExistsByUUID(id)){
+        Optional<Product> p = productPersistencePort.findProductById(id);
+        if(p.isEmpty()) {
             throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
         }
+        s3ServicePort.deleteImage(p.get().getImagePath());
         productPersistencePort.deleteProductById(id);
     }
 
