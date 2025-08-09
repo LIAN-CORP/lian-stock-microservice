@@ -27,6 +27,6 @@ public class CategoryEntity {
     @Column(nullable = false, length = 150)
     private String description;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<SubcategoryEntity> subcategories;
 }
