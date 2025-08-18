@@ -44,6 +44,16 @@ public class ProductUseCase implements IProductServicePort {
         return contentPage;
     }
 
+
+    @Override
+    public ContentPage<Product> findProductsByName(int page, int size, boolean isAsc, String sortBy, String name) {
+        ContentPage<Product> contentPage = productPersistencePort.findProductsByName(page, size, isAsc, sortBy, name);
+        if(contentPage.getContent().isEmpty()) {
+            throw new ProductsNotFoundException(ExceptionConstants.NO_RECORDS_FOR_PRODUCTS);
+        }
+        return contentPage;
+    }
+
     @Override
     public void discountProductsInStock(List<Product> products) {
         products = mergeItemsProductsWithSimilarId(products);

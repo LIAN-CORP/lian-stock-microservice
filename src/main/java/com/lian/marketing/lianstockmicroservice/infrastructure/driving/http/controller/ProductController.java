@@ -89,6 +89,32 @@ public class ProductController {
         );
     }
 
+    @Operation(summary = OpenApiConstants.PRODUCT_GET_ALL_BY_NAME_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.PRODUCT_GET_ALL_DESCRIPTION_200,
+                    content = {
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ContentPage.class))
+                    }
+            ),
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.PRODUCT_DESCRIPTION_404,
+                    content = {
+                            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ExceptionResponse.class))
+                    }
+            )
+    })
+    @GetMapping("/name")
+    public ResponseEntity<ContentPage<ProductResponse>> getProductsByName(
+            @RequestParam(defaultValue = OpenApiConstants.DEFAULT_PAGE) int page,
+            @RequestParam(defaultValue = OpenApiConstants.DEFAULT_SIZE) int size,
+            @RequestParam(defaultValue = OpenApiConstants.DEFAULT_IS_ASC) boolean isAsc,
+            @RequestParam(defaultValue = OpenApiConstants.DEFAULT_SORT_BY) String sortBy,
+            @RequestParam(defaultValue = OpenApiConstants.DEFAULT_NAME) String name
+    ){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                productHandler.findProductsByName(page, size, isAsc, sortBy, name)
+        );
+    }
+
     @PostMapping("/discount")
     public ResponseEntity<Void> discountProducts(@Valid @RequestBody List<DiscountProductStockRequest> request){
         productHandler.discountProductsInStock(request);

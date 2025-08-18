@@ -31,6 +31,7 @@ public class OpenApiConstants {
     public static final String PRODUCT_DESCRIPTION_404 = "Product or products records not found";
     public static final String PRODUCT_IMAGE_OPTIONAL = "Image product is optional";
     public static final String PRODUCT_GET_ALL_SUMMARY = "Get all products paged by page, size and is ascending params";
+    public static final String PRODUCT_GET_ALL_BY_NAME_SUMMARY = "Get all products paged by page, size and is ascending params";
     public static final String PRODUCT_GET_ALL_DESCRIPTION_200 = "Found product records";
     public static final String PRODUCT_GET_BY_ID_SUMMARY = "Get product by id";
     public static final String PRODUCT_PUT_SUMMARY = "Update product by id";
@@ -48,6 +49,7 @@ public class OpenApiConstants {
     public static final String DEFAULT_SIZE = "10";
     public static final String DEFAULT_IS_ASC = "true";
     public static final String DEFAULT_SORT_BY = "name";
+    public static final String DEFAULT_NAME = "";
 
     //Subcategory
     public static final String SUBCATEGORY_POST_SUMMARY = "Save new subcategory";

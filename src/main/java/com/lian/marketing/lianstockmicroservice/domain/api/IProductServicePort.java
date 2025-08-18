@@ -10,6 +10,7 @@ import java.util.UUID;
 public interface IProductServicePort {
     void createProduct(Product product, MultipartFile file);
     ContentPage<Product> findAllProducts(int page, int size, boolean isAsc, String sortBy);
+    ContentPage<Product> findProductsByName(int page, int size, boolean isAsc, String sortBy, String name);
     void discountProductsInStock(List<Product> product);
     Product getProductById(UUID id);
     void updateProduct(Product product);

@@ -9,6 +9,7 @@ import java.util.UUID;
 public interface IProductPersistencePort {
     void saveProduct(Product product);
     ContentPage<Product> findAllProducts(int page, int size, boolean isAsc, String sortBy);
+    ContentPage<Product> findProductsByName(int page, int size, boolean isAsc, String sortBy, String name);
     boolean productExistsByUUID(UUID id);
     boolean isProductInStock(UUID id, Integer quantity);
     boolean isPriceSellValid(UUID id, Double priceSell);

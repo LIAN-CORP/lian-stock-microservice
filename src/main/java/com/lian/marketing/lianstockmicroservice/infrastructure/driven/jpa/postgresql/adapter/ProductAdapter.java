@@ -49,6 +49,26 @@ public class ProductAdapter implements IProductPersistencePort {
     }
 
     @Override
+    public ContentPage<Product> findProductsByName(int page, int size, boolean isAsc, String sortBy, String name) {
+        Sort sort = isAsc
+                ? Sort.by(AdapterConstants.getValueSortMappingProducts(sortBy)).ascending()
+                : Sort.by(AdapterConstants.getValueSortMappingProducts(sortBy)).descending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<ProductEntity> products = productRepository.findAllByContainsName(name, pageable);
+        List<Product> productList = productEntityMapper.toProductList(products.getContent());
+        return new ContentPage<>(
+                products.getTotalPages(),
+                products.getTotalElements(),
+                products.getPageable().getPageNumber(),
+                products.getPageable().getPageSize(),
+                products.isFirst(),
+                products.isLast(),
+                productList
+        );
+    }
+
+    @Override
     public boolean productExistsByUUID(UUID id) {
         return productRepository.existsById(id);
     }

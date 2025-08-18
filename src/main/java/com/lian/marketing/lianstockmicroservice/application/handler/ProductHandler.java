@@ -43,6 +43,20 @@ public class ProductHandler {
         );
     }
 
+    public ContentPage<ProductResponse> findProductsByName(int page, int size, boolean isAsc, String sortBy, String name) {
+        ContentPage<Product> contentPage = productServicePort.findProductsByName(page, size, isAsc, sortBy, name);
+        List<ProductResponse> productResponseList = productMapper.toResponseList(contentPage.getContent());
+        return new ContentPage<>(
+                contentPage.getTotalPage(),
+                contentPage.getTotalElements(),
+                contentPage.getPageNumber(),
+                contentPage.getPageSize(),
+                contentPage.isFirst(),
+                contentPage.isLast(),
+                productResponseList
+        );
+    }
+
     public void discountProductsInStock(List<DiscountProductStockRequest> request) {
         productServicePort.discountProductsInStock(productMapper.toModelListFromDiscountListRequest(request));
     }

@@ -1,6 +1,8 @@
 package com.lian.marketing.lianstockmicroservice.infrastructure.driven.jpa.postgresql.repository;
 
 import com.lian.marketing.lianstockmicroservice.infrastructure.driven.jpa.postgresql.entity.ProductEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +12,9 @@ import java.util.UUID;
 
 public interface IProductRepository extends JpaRepository<ProductEntity, UUID> {
     boolean existsById(UUID id);
+
+    @Query(value = "SELECT * FROM product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))", nativeQuery = true)
+    Page<ProductEntity> findAllByContainsName(String name, Pageable pageable);
 
     @Query(value = "SELECT CASE WHEN p.stock >= :quantity THEN true ELSE false END FROM product p WHERE p.id = :id", nativeQuery = true)
     boolean isInStock(@Param("id") UUID id, @Param("quantity") Integer quantity);
@@ -24,4 +29,6 @@ public interface IProductRepository extends JpaRepository<ProductEntity, UUID> {
     @Modifying
     @Query(value = "UPDATE product SET stock = stock + :quantity WHERE id = :id", nativeQuery = true)
     void updateStockPlus(@Param("id") UUID id, @Param("quantity") Integer quantity);
+
+    Page<ProductEntity> findAllByName(String name, Pageable pageable);
 }
