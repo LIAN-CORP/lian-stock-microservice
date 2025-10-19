@@ -1,6 +1,8 @@
 package com.lian.marketing.lianstockmicroservice.application.handler;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateSubcategoryRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.request.UpdateSubcategoryRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryFullResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryItemResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryResponse;
 import com.lian.marketing.lianstockmicroservice.application.mapper.ISubcategoryMapper;
@@ -50,6 +52,19 @@ public class SubcategoryHandler {
                 contentPage.isLast(),
                 subcategoryResponseList
         );
+    }
+
+    public SubcategoryFullResponse findSubcategoryById(UUID id) {
+        Subcategory subcategory = subcategoryServicePort.findSubcategoryById(id);
+        return subcategoryMapper.fromModelToFullResponse(subcategory);
+    }
+
+    public void updateCategory(UpdateSubcategoryRequest request) {
+        subcategoryServicePort.updateSubcategory(subcategoryMapper.toModelFromUpdateRequest(request));
+    }
+
+    public void deleteSubcategoryById(UUID id) {
+        subcategoryServicePort.deleteSubcategoryById(id);
     }
 
 }

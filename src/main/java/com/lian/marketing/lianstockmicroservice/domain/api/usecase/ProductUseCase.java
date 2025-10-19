@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -42,6 +44,16 @@ public class ProductUseCase implements IProductServicePort {
         return contentPage;
     }
 
+
+    @Override
+    public ContentPage<Product> findProductsByName(int page, int size, boolean isAsc, String sortBy, String name) {
+        ContentPage<Product> contentPage = productPersistencePort.findProductsByName(page, size, isAsc, sortBy, name);
+        if(contentPage.getContent().isEmpty()) {
+            throw new ProductsNotFoundException(ExceptionConstants.NO_RECORDS_FOR_PRODUCTS);
+        }
+        return contentPage;
+    }
+
     @Override
     public void discountProductsInStock(List<Product> products) {
         products = mergeItemsProductsWithSimilarId(products);
@@ -54,6 +66,64 @@ public class ProductUseCase implements IProductServicePort {
             }
         });
         products.forEach(product -> productPersistencePort.discountProductInStock(product.getId(), product.getStock()));
+    }
+
+    @Override
+    public Product getProductById(UUID id) {
+        Optional<Product> product = productPersistencePort.findProductById(id);
+        if(product.isEmpty()) {
+            throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
+        }
+        return product.get();
+    }
+
+    @Override
+    public void updateProduct(Product product) {
+        if(!productPersistencePort.productExistsByUUID(product.getId())){
+            throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
+        }
+        product.setSubcategory(subcategoryServicePort.findSubcategoryById(product.getSubcategory().getId()));
+        Optional<Product> p = productPersistencePort.findProductById(product.getId());
+        if(p.isEmpty()) {
+            throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
+        }
+        product.setImagePath(p.get().getImagePath());
+        productPersistencePort.updateProduct(product);
+    }
+
+    @Override
+    public void deleteProductById(UUID id) {
+        Optional<Product> p = productPersistencePort.findProductById(id);
+        if(p.isEmpty()) {
+            throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
+        }
+        s3ServicePort.deleteImage(p.get().getImagePath());
+        productPersistencePort.deleteProductById(id);
+    }
+
+    @Override
+    public Double getPriceSellByProductId(UUID id) {
+        return productPersistencePort.findProductById(id)
+                .orElseThrow(() -> new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND))
+                .getPriceSell();
+    }
+
+    @Override
+    public void addProductToStock(List<Product> products) {
+        products = mergeItemsProductsWithSimilarId(products);
+        products.forEach(product -> {
+            if(!productPersistencePort.productExistsByUUID(product.getId())){
+                throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
+            }
+        });
+        products.forEach(product -> productPersistencePort.addProductToStock(product.getId(), product.getStock()));
+    }
+
+    @Override
+    public Double getPriceBuyByProductId(UUID id) {
+        return productPersistencePort.findProductById(id)
+                .orElseThrow(() -> new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND))
+                .getPriceBuy();
     }
 
     private List<Product> mergeItemsProductsWithSimilarId(List<Product> products){

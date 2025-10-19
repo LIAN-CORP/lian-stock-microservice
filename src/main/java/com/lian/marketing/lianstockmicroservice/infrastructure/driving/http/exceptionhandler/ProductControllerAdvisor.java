@@ -19,7 +19,8 @@ public class ProductControllerAdvisor {
                 HttpStatus.NOT_FOUND.toString(),
                 HttpStatus.NOT_FOUND.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "PRODUCTS_NOT_FOUND_EXCEPTION"
         ));
     }
 
@@ -29,7 +30,8 @@ public class ProductControllerAdvisor {
                 HttpStatus.BAD_REQUEST.toString(),
                 HttpStatus.BAD_REQUEST.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "PRODUCT_IS_NOT_IN_STOCK_EXCEPTION"
         ));
     }
 
@@ -39,7 +41,8 @@ public class ProductControllerAdvisor {
                 HttpStatus.BAD_REQUEST.toString(),
                 HttpStatus.BAD_REQUEST.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "PRODUCT_PRICE_SELL_DO_NOT_MATCH_EXCEPTION"
         ));
     }
 }

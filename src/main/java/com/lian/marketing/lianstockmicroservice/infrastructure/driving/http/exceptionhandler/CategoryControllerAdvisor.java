@@ -18,7 +18,8 @@ public class CategoryControllerAdvisor {
                 HttpStatus.BAD_REQUEST.toString(),
                 HttpStatus.BAD_REQUEST.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "CATEGORY_ALREADY_EXISTS_EXCEPTION"
         ));
     }
 
@@ -28,7 +29,8 @@ public class CategoryControllerAdvisor {
                 HttpStatus.BAD_REQUEST.toString(),
                 HttpStatus.BAD_REQUEST.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "METHOD_ARGUMENT_NOT_VALID_EXCEPTION"
         ));
     }
 
@@ -38,7 +40,8 @@ public class CategoryControllerAdvisor {
                 HttpStatus.NOT_FOUND.toString(),
                 HttpStatus.NOT_FOUND.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "CATEGORIES_NOT_FOUND_EXCEPTION"
         ));
     }
 }

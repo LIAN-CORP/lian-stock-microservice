@@ -19,7 +19,8 @@ public class ThirdPartyControllerAdvisor {
                 HttpStatus.BAD_GATEWAY.toString(),
                 HttpStatus.BAD_GATEWAY.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "AMAZON_S3_EXCEPTION"
         ));
     }
 
@@ -29,7 +30,8 @@ public class ThirdPartyControllerAdvisor {
                 HttpStatus.BAD_GATEWAY.toString(),
                 HttpStatus.BAD_GATEWAY.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "FILE_DOWNLOAD_EXCEPTION"
         ));
     }
 
@@ -39,7 +41,8 @@ public class ThirdPartyControllerAdvisor {
                 HttpStatus.BAD_GATEWAY.toString(),
                 HttpStatus.BAD_GATEWAY.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "FILE_UPLOAD_EXCEPTION"
         ));
     }
 
@@ -49,7 +52,19 @@ public class ThirdPartyControllerAdvisor {
                 HttpStatus.BAD_GATEWAY.toString(),
                 HttpStatus.BAD_GATEWAY.value(),
                 e.getMessage(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                "SDK_AWS_EXCEPTION"
+        ));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ExceptionResponse> handleIllegalArgumentException(IllegalArgumentException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(
+                HttpStatus.BAD_REQUEST.toString(),
+                HttpStatus.BAD_REQUEST.value(),
+                e.getMessage(),
+                LocalDateTime.now(),
+                "ILLEGAL_ARGUMENT_EXCEPTION"
         ));
     }
 }

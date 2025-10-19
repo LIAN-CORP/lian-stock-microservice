@@ -12,6 +12,7 @@ import com.lian.marketing.lianstockmicroservice.domain.model.Subcategory;
 import com.lian.marketing.lianstockmicroservice.domain.spi.ISubcategoryPersistencePort;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -54,5 +55,34 @@ public class SubcategoryUseCase implements ISubcategoryServicePort {
         if(!subcategoryPersistencePort.subcategoryExistsByUUID(uuid)) {
             throw new SubcategoryNotFoundException(String.format(ExceptionConstants.SUBCATEGORY_WITH_ID_NOT_EXISTS, uuid));
         }
+    }
+
+    @Override
+    public Subcategory findSubcategoryById(UUID id) {
+        Optional<Subcategory> subcategory = subcategoryPersistencePort.findSubcategoryById(id);
+        if(subcategory.isEmpty()) {
+            throw new SubcategoryNotFoundException(String.format(ExceptionConstants.SUBCATEGORY_WITH_ID_NOT_EXISTS, id));
+        }
+        return subcategory.get();
+    }
+
+    @Override
+    public void updateSubcategory(Subcategory subcategory) {
+        if(!subcategoryPersistencePort.subcategoryExistsByUUID(subcategory.getId())) {
+            throw new SubcategoryNotFoundException(String.format(ExceptionConstants.SUBCATEGORY_WITH_ID_NOT_EXISTS, subcategory.getId()));
+        }
+        if(!categoryServicePort.categoryExistsByUUID(subcategory.getCategory().getId())){
+            throw new CategoryWithIdNotExists(String.format(ExceptionConstants.CATEGORY_WITH_ID_NOT_EXISTS, subcategory.getCategory().getId()));
+        }
+        subcategory.setCategory(categoryServicePort.findCategoryById(subcategory.getCategory().getId()));
+        subcategoryPersistencePort.updateSubcategory(subcategory);
+    }
+
+    @Override
+    public void deleteSubcategoryById(UUID id) {
+        if(!subcategoryPersistencePort.subcategoryExistsByUUID(id)) {
+            throw new SubcategoryNotFoundException(String.format(ExceptionConstants.SUBCATEGORY_WITH_ID_NOT_EXISTS, id));
+        }
+        subcategoryPersistencePort.deleteSubcategoryById(id);
     }
 }

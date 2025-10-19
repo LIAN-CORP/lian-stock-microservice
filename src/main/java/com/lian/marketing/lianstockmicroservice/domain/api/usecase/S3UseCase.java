@@ -32,4 +32,11 @@ public class S3UseCase implements IS3ServicePort {
             throw new FileUploadException(String.format(ExceptionConstants.FILE_UPLOAD_FAILED, e.getMessage()));
         }
     }
+
+    @Override
+    public void deleteImage(String imageName) {
+        String keyName = imageName.substring(imageName.lastIndexOf('/') + 1);
+        s3PersistencePort.deleteFile(CoreConstants.BUCKET_PRODUCT_NAME, keyName);
+    }
+
 }

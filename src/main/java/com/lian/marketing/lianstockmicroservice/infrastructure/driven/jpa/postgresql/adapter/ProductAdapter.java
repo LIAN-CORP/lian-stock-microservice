@@ -12,9 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -49,6 +49,26 @@ public class ProductAdapter implements IProductPersistencePort {
     }
 
     @Override
+    public ContentPage<Product> findProductsByName(int page, int size, boolean isAsc, String sortBy, String name) {
+        Sort sort = isAsc
+                ? Sort.by(AdapterConstants.getValueSortMappingProducts(sortBy)).ascending()
+                : Sort.by(AdapterConstants.getValueSortMappingProducts(sortBy)).descending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<ProductEntity> products = productRepository.findAllByContainsName(name, pageable);
+        List<Product> productList = productEntityMapper.toProductList(products.getContent());
+        return new ContentPage<>(
+                products.getTotalPages(),
+                products.getTotalElements(),
+                products.getPageable().getPageNumber(),
+                products.getPageable().getPageSize(),
+                products.isFirst(),
+                products.isLast(),
+                productList
+        );
+    }
+
+    @Override
     public boolean productExistsByUUID(UUID id) {
         return productRepository.existsById(id);
     }
@@ -66,5 +86,25 @@ public class ProductAdapter implements IProductPersistencePort {
     @Override
     public void discountProductInStock(UUID id, Integer quantity) {
         productRepository.updateStock(id, quantity);
+    }
+
+    @Override
+    public Optional<Product> findProductById(UUID id) {
+        return productRepository.findById(id).map(productEntityMapper::toProduct);
+    }
+
+    @Override
+    public void updateProduct(Product product) {
+        productRepository.save(productEntityMapper.toEntity(product));
+    }
+
+    @Override
+    public void deleteProductById(UUID id) {
+        productRepository.deleteById(id);
+    }
+
+    @Override
+    public void addProductToStock(UUID id, Integer quantity) {
+        productRepository.updateStockPlus(id, quantity);
     }
 }

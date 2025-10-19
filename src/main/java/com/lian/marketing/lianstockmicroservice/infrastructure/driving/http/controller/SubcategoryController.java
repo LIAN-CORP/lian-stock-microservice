@@ -1,6 +1,8 @@
 package com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.controller;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateSubcategoryRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.request.UpdateSubcategoryRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryFullResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryItemResponse;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.SubcategoryResponse;
 import com.lian.marketing.lianstockmicroservice.application.handler.SubcategoryHandler;
@@ -82,4 +84,53 @@ public class SubcategoryController {
         );
     }
 
+    @Operation(summary = OpenApiConstants.SUBCATEGORY_GET_BY_ID_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.SUBCATEGORY_GET_ALL_DESCRIPTION_200,
+                    content = {
+                            @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = SubcategoryFullResponse.class))
+                    }
+            ),
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.SUBCATEGORY_DESCRIPTION_404,
+                    content = {
+                            @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = ExceptionResponse.class))
+                    }
+            )
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<SubcategoryFullResponse> getSubcategory(@PathVariable("id") UUID id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                subcategoryHandler.findSubcategoryById(id)
+        );
+    }
+
+    @Operation(summary = OpenApiConstants.SUBCATEGORY_PUT_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.SUBCATEGORY_GET_ALL_DESCRIPTION_200),
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.SUBCATEGORY_DESCRIPTION_404,
+                    content = {
+                            @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = ExceptionResponse.class))
+                    }
+            )
+    })
+    @PutMapping
+    public ResponseEntity<Void> putSubcategory(@Valid @RequestBody UpdateSubcategoryRequest request) {
+        subcategoryHandler.updateCategory(request);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @Operation(summary = OpenApiConstants.SUBCATEGORY_DELETE_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.SUBCATEGORY_DELETE_DESCRIPTION_204),
+            @ApiResponse(responseCode = OpenApiConstants.NOT_FOUND_STATUS_CODE, description = OpenApiConstants.SUBCATEGORY_DESCRIPTION_404,
+                    content = {
+                            @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = ExceptionResponse.class))
+                    }
+            )
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSubcategory(@PathVariable("id") UUID id) {
+        subcategoryHandler.deleteSubcategoryById(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,4 +27,6 @@ public class CategoryEntity {
     @Column(nullable = false, length = 150)
     private String description;
 
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<SubcategoryEntity> subcategories;
 }

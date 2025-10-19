@@ -1,6 +1,7 @@
 package com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.controller;
 
 import com.lian.marketing.lianstockmicroservice.application.dto.request.CreateCategoryRequest;
+import com.lian.marketing.lianstockmicroservice.application.dto.request.UpdateCategoryRequest;
 import com.lian.marketing.lianstockmicroservice.application.dto.response.CategoryResponse;
 import com.lian.marketing.lianstockmicroservice.application.handler.CategoryHandler;
 import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
@@ -64,6 +65,58 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).body(
                 categoryHandler.findAllCategories(page, size, isAsc)
         );
+    }
+
+    @Operation(summary = OpenApiConstants.CATEGORY_GET_BY_ID_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.CATEGORY_DESCRIPTION_200,
+            content = {
+                    @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = CategoryResponse.class))
+            }),
+            @ApiResponse(responseCode = OpenApiConstants.BAD_REQUEST_STATUS_CODE, description = OpenApiConstants.CATEGORY_DESCRIPTION_404,
+             content = {
+                    @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = ExceptionResponse.class))
+            })
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryResponse> getCategory(@PathVariable("id") UUID id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+                categoryHandler.findCategoryById(id)
+        );
+    }
+
+    @Operation(summary = OpenApiConstants.CATEGORY_PUT_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.CATEGORY_DESCRIPTION_200,
+            content = {
+                    @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON)
+            }),
+            @ApiResponse(responseCode = OpenApiConstants.BAD_REQUEST_STATUS_CODE, description = OpenApiConstants.CATEGORY_DESCRIPTION_404,
+            content = {
+                    @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = ExceptionResponse.class))
+            })
+    })
+    @PutMapping
+    public ResponseEntity<Void> putCategory(@Valid @RequestBody UpdateCategoryRequest request) {
+        categoryHandler.updateCategory(request);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @Operation(summary = OpenApiConstants.CATEGORY_DELETE_SUMMARY)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = OpenApiConstants.OK_STATUS_CODE, description = OpenApiConstants.CATEGORY_DELETE_DESCRIPTION_204,
+            content = {
+                    @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON)
+            }),
+            @ApiResponse(responseCode = OpenApiConstants.BAD_REQUEST_STATUS_CODE, description = OpenApiConstants.CATEGORY_DESCRIPTION_404,
+            content = {
+                    @Content(mediaType = OpenApiConstants.MEDIATYPE_JSON, schema = @Schema(implementation = ExceptionResponse.class))
+            })
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable("id") UUID id) {
+        categoryHandler.deleteCategoryById(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

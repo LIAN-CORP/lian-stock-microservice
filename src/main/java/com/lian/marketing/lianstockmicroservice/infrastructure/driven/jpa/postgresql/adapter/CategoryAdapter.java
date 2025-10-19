@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -52,5 +53,20 @@ public class CategoryAdapter implements ICategoryPersistencePort {
     @Override
     public boolean categoryExistsByUUID(UUID uuid) {
         return categoryRepository.existsById(uuid);
+    }
+
+    @Override
+    public Optional<Category> findCategoryById(UUID id) {
+        return categoryRepository.findById(id).map(categoryEntityMapper::fromEntityToCategoryModel);
+    }
+
+    @Override
+    public void updateCategory(Category category) {
+        categoryRepository.save(categoryEntityMapper.fromModelToCategoryEntity(category));
+    }
+
+    @Override
+    public void deleteCategoryById(UUID id) {
+        categoryRepository.deleteById(id);
     }
 }

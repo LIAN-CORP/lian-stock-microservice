@@ -6,6 +6,7 @@ public record ExceptionResponse(
         String status,
         int code,
         String message,
-        LocalDateTime timestamp
+        LocalDateTime timestamp,
+        String type
 ) {
 }
