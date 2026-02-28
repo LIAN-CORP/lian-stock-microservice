@@ -1,5 +1,6 @@
 package com.lian.marketing.lianstockmicroservice.infrastructure.driving.http.exceptionhandler;
 
+import com.lian.marketing.lianstockmicroservice.domain.exception.PriceSellCannotBeLessThanPriceBuyException;
 import com.lian.marketing.lianstockmicroservice.domain.exception.ProductIsNotInStockException;
 import com.lian.marketing.lianstockmicroservice.domain.exception.ProductPriceSellDoNotMatchException;
 import com.lian.marketing.lianstockmicroservice.domain.exception.ProductsNotFoundException;
@@ -43,6 +44,17 @@ public class ProductControllerAdvisor {
                 e.getMessage(),
                 LocalDateTime.now(),
                 "PRODUCT_PRICE_SELL_DO_NOT_MATCH_EXCEPTION"
+        ));
+    }
+
+    @ExceptionHandler(PriceSellCannotBeLessThanPriceBuyException.class)
+    public ResponseEntity<ExceptionResponse> handlePriceSellCannotBeLessThanPriceBuyException(PriceSellCannotBeLessThanPriceBuyException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(
+                HttpStatus.BAD_REQUEST.toString(),
+                HttpStatus.BAD_REQUEST.value(),
+                e.getMessage(),
+                LocalDateTime.now(),
+                "PRICE_SELL_CANNOT_BE_LESS_THAN_PRICE_BUY_EXCEPTION"
         ));
     }
 }
