@@ -4,6 +4,7 @@ import com.lian.marketing.lianstockmicroservice.domain.api.IProductServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.api.IS3ServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.api.ISubcategoryServicePort;
 import com.lian.marketing.lianstockmicroservice.domain.constants.ExceptionConstants;
+import com.lian.marketing.lianstockmicroservice.domain.exception.PriceSellCannotBeLessThanPriceBuyException;
 import com.lian.marketing.lianstockmicroservice.domain.exception.ProductIsNotInStockException;
 import com.lian.marketing.lianstockmicroservice.domain.exception.ProductsNotFoundException;
 import com.lian.marketing.lianstockmicroservice.domain.model.ContentPage;
@@ -28,11 +29,14 @@ public class ProductUseCase implements IProductServicePort {
     @Override
     public void createProduct(Product product, MultipartFile file) {
         subcategoryServicePort.subcategoryExistsByUUID(product.getSubcategory().getId());
+        if(product.getPriceSell() < product.getPriceBuy()){
+            throw new PriceSellCannotBeLessThanPriceBuyException(ExceptionConstants.PRICE_SELL_CANNOT_BE_LESS_THAN_PRICE_BUY);
+        }
         if(file != null && !file.isEmpty()) {
             String imagePath = s3ServicePort.saveImage(file);
             product.setImagePath(imagePath);
         }
-            productPersistencePort.saveProduct(product);
+        productPersistencePort.saveProduct(product);
     }
 
     @Override
