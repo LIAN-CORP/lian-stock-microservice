@@ -35,7 +35,7 @@ public class ProductAdapter implements IProductPersistencePort {
                 : Sort.by(AdapterConstants.getValueSortMappingProducts(sortBy)).descending();
 
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<ProductEntity> products = productRepository.findAll(pageable);
+        Page<ProductEntity> products = productRepository.findAllByIsActive(true, pageable);
         List<Product> productList = productEntityMapper.toProductList(products.getContent());
         return new ContentPage<>(
                 products.getTotalPages(),

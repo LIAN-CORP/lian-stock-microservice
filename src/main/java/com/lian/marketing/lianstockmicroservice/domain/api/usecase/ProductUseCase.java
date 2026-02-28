@@ -105,7 +105,9 @@ public class ProductUseCase implements IProductServicePort {
             throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
         }
         s3ServicePort.deleteImage(p.get().getImagePath());
-        productPersistencePort.deleteProductById(id);
+        p.get().setIsActive(false);
+        productPersistencePort.updateProduct(p.get());
+        //productPersistencePort.deleteProductById(id);
     }
 
     @Override
@@ -144,9 +146,20 @@ public class ProductUseCase implements IProductServicePort {
                         p.getPriceSell(),
                         p.getPriceBuy(),
                         p.getSubcategory(),
-                        p.getImagePath()
+                        p.getImagePath(),
+                        p.getIsActive()
                 ),
-                (p1, p2) -> new Product(p1.getId(), p1.getName(), p1.getDescription(), p1.getStock() + p2.getStock(), p1.getPriceSell(), p1.getPriceBuy(), p1.getSubcategory(), p1.getImagePath())
+                (p1, p2) -> new Product(
+                  p1.getId(),
+                  p1.getName(),
+                  p1.getDescription(),
+                  p1.getStock() + p2.getStock(),
+                  p1.getPriceSell(),
+                  p1.getPriceBuy(),
+                  p1.getSubcategory(),
+                  p1.getImagePath(),
+                  p1.getIsActive()
+                )
         )).values());
     }
 }

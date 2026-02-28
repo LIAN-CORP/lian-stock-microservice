@@ -20,4 +20,5 @@ public class Product {
     private Double priceBuy;
     private Subcategory subcategory;
     private String imagePath;
+    private Boolean isActive;
 }

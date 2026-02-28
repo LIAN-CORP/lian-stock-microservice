@@ -16,4 +16,5 @@ public class Subcategory {
     private String name;
     private String description;
     private Category category;
+    private Boolean isActive;
 }
