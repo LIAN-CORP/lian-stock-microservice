@@ -21,4 +21,6 @@ public class ExceptionConstants {
     public static final String PRODUCT_NOT_FOUND = "Product not found";
     public static final String PRODUCT_PRICE_SELL_DO_NOT_MATCH = "Product price sell do not match";
     public static final String PRODUCT_IS_NOT_IN_STOCK = "Product is not in stock";
+
+    public static final String PRICE_SELL_CANNOT_BE_LESS_THAN_PRICE_BUY = "Price sell cannot be less than price buy";
 }
