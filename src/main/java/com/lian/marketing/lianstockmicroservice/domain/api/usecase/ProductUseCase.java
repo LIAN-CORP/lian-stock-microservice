@@ -83,6 +83,9 @@ public class ProductUseCase implements IProductServicePort {
 
     @Override
     public void updateProduct(Product product) {
+        if(product.getPriceSell() < product.getPriceBuy()){
+            throw new PriceSellCannotBeLessThanPriceBuyException(ExceptionConstants.PRICE_SELL_CANNOT_BE_LESS_THAN_PRICE_BUY);
+        }
         if(!productPersistencePort.productExistsByUUID(product.getId())){
             throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
         }
