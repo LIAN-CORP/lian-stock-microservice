@@ -42,4 +42,6 @@ public class ProductEntity {
     @Column(name = "image_path")
     private String imagePath;
 
+    @Column(nullable = false)
+    private Boolean isActive;
 }

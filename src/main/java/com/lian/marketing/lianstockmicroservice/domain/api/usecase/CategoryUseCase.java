@@ -64,7 +64,10 @@ public class CategoryUseCase implements ICategoryServicePort {
         if(!categoryPersistencePort.categoryExistsByUUID(id)){
             throw new CategoriesNotFoundException(ExceptionConstants.CATEGORY_WITH_ID_NOT_EXISTS);
         }
-        categoryPersistencePort.deleteCategoryById(id);
+        Category category = categoryPersistencePort.findCategoryById(id).get();
+        category.setIsActive(false);
+        categoryPersistencePort.updateCategory(category);
+        //categoryPersistencePort.deleteCategoryById(id);
     }
 
 }

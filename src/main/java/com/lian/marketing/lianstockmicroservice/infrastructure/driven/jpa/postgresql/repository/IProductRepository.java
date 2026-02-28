@@ -13,7 +13,7 @@ import java.util.UUID;
 public interface IProductRepository extends JpaRepository<ProductEntity, UUID> {
     boolean existsById(UUID id);
 
-    @Query(value = "SELECT * FROM product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))", nativeQuery = true)
+    @Query(value = "SELECT * FROM product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%')) AND p.is_active = true", nativeQuery = true)
     Page<ProductEntity> findAllByContainsName(String name, Pageable pageable);
 
     @Query(value = "SELECT CASE WHEN p.stock >= :quantity THEN true ELSE false END FROM product p WHERE p.id = :id", nativeQuery = true)
@@ -31,4 +31,6 @@ public interface IProductRepository extends JpaRepository<ProductEntity, UUID> {
     void updateStockPlus(@Param("id") UUID id, @Param("quantity") Integer quantity);
 
     Page<ProductEntity> findAllByName(String name, Pageable pageable);
+
+    Page<ProductEntity> findAllByIsActive(boolean b, Pageable pageable);
 }

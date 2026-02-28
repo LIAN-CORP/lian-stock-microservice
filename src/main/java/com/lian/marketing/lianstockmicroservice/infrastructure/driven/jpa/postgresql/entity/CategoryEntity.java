@@ -29,4 +29,7 @@ public class CategoryEntity {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<SubcategoryEntity> subcategories;
+
+    @Column(nullable = false)
+    private Boolean isActive;
 }

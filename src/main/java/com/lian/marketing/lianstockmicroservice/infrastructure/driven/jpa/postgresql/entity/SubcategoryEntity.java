@@ -34,4 +34,6 @@ public class SubcategoryEntity {
     @OneToMany(mappedBy = "subcategory", cascade = CascadeType.ALL)
     private List<ProductEntity> products;
 
+    @Column(nullable = false)
+    private Boolean isActive;
 }
