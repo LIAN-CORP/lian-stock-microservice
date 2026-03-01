@@ -36,6 +36,7 @@ public class ProductUseCase implements IProductServicePort {
             String imagePath = s3ServicePort.saveImage(file);
             product.setImagePath(imagePath);
         }
+        product.setIsActive(true);
         productPersistencePort.saveProduct(product);
     }
 
@@ -95,6 +96,7 @@ public class ProductUseCase implements IProductServicePort {
             throw new ProductsNotFoundException(ExceptionConstants.PRODUCT_NOT_FOUND);
         }
         product.setImagePath(p.get().getImagePath());
+        product.setIsActive(p.get().getIsActive());
         productPersistencePort.updateProduct(product);
     }
 
@@ -107,7 +109,6 @@ public class ProductUseCase implements IProductServicePort {
         s3ServicePort.deleteImage(p.get().getImagePath());
         p.get().setIsActive(false);
         productPersistencePort.updateProduct(p.get());
-        //productPersistencePort.deleteProductById(id);
     }
 
     @Override
