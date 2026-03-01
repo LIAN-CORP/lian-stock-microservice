@@ -66,8 +66,7 @@ public class CategoryUseCase implements ICategoryServicePort {
         }
         Category category = categoryPersistencePort.findCategoryById(id).get();
         category.setIsActive(false);
-        categoryPersistencePort.updateCategory(category);
-        //categoryPersistencePort.deleteCategoryById(id);
+        categoryPersistencePort.deleteCategoryById(id);
     }
 
 }

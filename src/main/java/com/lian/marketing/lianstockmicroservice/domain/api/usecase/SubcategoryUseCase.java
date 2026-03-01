@@ -85,7 +85,6 @@ public class SubcategoryUseCase implements ISubcategoryServicePort {
         }
         Subcategory subcategory = subcategoryPersistencePort.findSubcategoryById(id).get();
         subcategory.setIsActive(false);
-        subcategoryPersistencePort.updateSubcategory(subcategory);
-        //subcategoryPersistencePort.deleteSubcategoryById(id);
+        subcategoryPersistencePort.deleteSubcategoryById(id);
     }
 }
